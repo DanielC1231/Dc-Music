@@ -54,3 +54,93 @@ const songs = [
   { title: "Un Ratito Mas", artist: "Trap Latino", src: "https://archive.org" },
   { title: "Vacio", artist: "Trap Latino", src: "https://archive.org" }
 ];
+
+const songList = document.getElementById('songList');
+const audio = new Audio();
+let currentIndex = 0;
+const playBtn = document.getElementById('playBtn');
+const progress = document.getElementById('progress');
+
+// Pintar las canciones al cargar la interfaz
+if (songs.length > 0) {
+    renderSongs(songs);
+} else {
+    songList.innerHTML = "<p>No hay canciones configuradas.</p>";
+}
+
+function renderSongs(songsToDisplay) {
+    songList.innerHTML = "";
+    songsToDisplay.forEach((song, index) => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+            <h4>${song.title}</h4>
+            <p style="color: #b3b3b3; font-size: 14px;">${song.artist}</p>
+        `;
+        card.onclick = () => loadAndPlay(index);
+        songList.appendChild(card);
+    });
+}
+
+// Lógica de navegación del menú lateral
+function changeSection(section) {
+    const title = document.getElementById('sectionTitle');
+    document.getElementById('menu-inicio').classList.remove('active');
+    document.getElementById('menu-biblioteca').classList.remove('active');
+
+    if (section === 'inicio') {
+        document.getElementById('menu-inicio').classList.add('active');
+        title.innerText = "Buenos Días";
+        renderSongs(songs); 
+    } else if (section === 'biblioteca') {
+        document.getElementById('menu-biblioteca').classList.add('active');
+        title.innerText = "Tu Biblioteca";
+        renderSongs(songs); 
+    }
+}
+
+// Controles principales del reproductor
+function loadAndPlay(index) {
+    currentIndex = index;
+    audio.src = songs[currentIndex].src;
+    document.getElementById('currentTitle').innerText = songs[currentIndex].title;
+    document.getElementById('currentArtist').innerText = songs[currentIndex].artist;
+    
+    audio.load();
+    audio.play().then(() => {
+        playBtn.innerText = "⏸";
+    }).catch(e => console.log("Esperando acción del usuario en pantalla"));
+}
+
+function playSong() {
+    if (audio.src === "") {
+        if(songs.length > 0) loadAndPlay(0);
+        return;
+    }
+    if (audio.paused) {
+        audio.play();
+        playBtn.innerText = "⏸";
+    } else {
+        audio.pause();
+        playBtn.innerText = "▶";
+    }
+}
+
+function nextSong() {
+    currentIndex = (currentIndex + 1) % songs.length;
+    loadAndPlay(currentIndex);
+}
+
+function prevSong() {
+    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    loadAndPlay(currentIndex);
+}
+
+// Barra de progreso de tiempo interactiva
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+        progress.value = (audio.currentTime / audio.duration) * 100;
+    }
+});
+
+progress.addEventListener('input', () 
