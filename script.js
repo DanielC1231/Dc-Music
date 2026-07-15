@@ -136,6 +136,12 @@ function prevSong() {
     loadAndPlay(currentIndex);
 }
 
+/ Barra de progreso de tiempo interactiva
+audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+        progress.value = (audio.currentTime / audio.duration) * 100;
+    }
+});
 // Barra de progreso de tiempo interactiva
 audio.addEventListener('timeupdate', () => {
     if (audio.duration) {
@@ -143,4 +149,25 @@ audio.addEventListener('timeupdate', () => {
     }
 });
 
-progress.addEventListener('input', () 
+// NUEVO FIJADO: Cierre correcto de la barra de progreso
+progress.addEventListener('input', () => {
+    if (audio.duration) {
+        audio.currentTime = (progress.value / 100) * audio.duration;
+    }
+});
+
+// Función para descargar la pista activa
+function downloadCurrentSong() {
+    if (audio.src === "") {
+        alert("Primero selecciona una canción para poder descargarla.");
+        return;
+    }
+    const link = document.createElement('a');
+    link.href = songs[currentIndex].src;
+    // CORREGIDO: Con las comillas invertidas correctas para que no dé error
+    link.download = `${songs[currentIndex].title}.mp3`;
+    link.target = "_blank"; 
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
