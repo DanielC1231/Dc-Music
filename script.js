@@ -1,22 +1,42 @@
-// 1. TU ENLACE BASE DE ARCHIVE.ORG
+// Enlace base de tu colección
 const urlBase = "https://archive.org";
 
-// 2. TUS CANCIONES DE LA COLECCIÓN
-// Pon aquí los nombres EXACTOS de tus archivos .mp3 (tal como los subiste a Archive)
-const nombresArchivos = [
-    "De las 2",
-    "Ella y Yo (Remix)",
-    "Diles (Remix)",
-    "Me Acostumbre"
-    // Cuando subas las otras 46 canciones, solo pon el nombre entre comillas separado por una coma
+// LISTA ACTUALIZADA CON LAS RUTAS REALES CORREGIDAS E IMÁGENES
+const songsData = [
+    {
+        title: "De las 2",
+        artist: "Trap Latino",
+        // Agregamos el formato exacto del servidor para que no se quede mudo
+        file: "De las 2.mp3", 
+        cover: "https://unsplash.com" // Imagen de prueba urbana
+    },
+    {
+        title: "Ella y Yo (Remix)",
+        artist: "Trap Latino",
+        file: "Ella y Yo (Remix).mp3",
+        cover: "https://unsplash.com"
+    },
+    {
+        title: "Diles (Remix)",
+        artist: "Trap Latino",
+        file: "Diles (Remix).mp3",
+        cover: "https://unsplash.com"
+    },
+    {
+        title: "Me Acostumbre",
+        artist: "Trap Latino",
+        file: "Me Acostumbre.mp3",
+        cover: "https://unsplash.com"
+    }
 ];
 
-// 3. PROCESADOR AUTOMÁTICO (Convierte tus nombres en enlaces reales)
-const allSongs = nombresArchivos.map(nombre => {
+// Procesamos el arreglo para armar las URL funcionales
+const allSongs = songsData.map(song => {
     return {
-        title: nombre.replace(/_/g, " "), // Cambia guiones bajos por espacios para que se vea bonito
-        artist: "Trap Latino",
-        src: urlBase + encodeURIComponent(nombre) + ".mp3" // Crea el enlace directo funcional
+        title: song.title,
+        artist: song.artist,
+        cover: song.cover,
+        src: urlBase + encodeURIComponent(song.file)
     };
 });
 
@@ -26,20 +46,21 @@ let currentIndex = 0;
 const playBtn = document.getElementById('playBtn');
 const progress = document.getElementById('progress');
 
-// Inicializar la interfaz pintando tus canciones
+// Imprimir canciones en pantalla
 if (allSongs.length > 0) {
     renderSongs(allSongs);
 } else {
     songList.innerHTML = "<p>No hay canciones configuradas.</p>";
 }
 
-// 4. MOSTRAR CANCIONES EN LA INTERFAZ
 function renderSongs(songsToDisplay) {
     songList.innerHTML = "";
     songsToDisplay.forEach((song, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
+        // Agregamos la etiqueta <img> para la portada de la canción
         card.innerHTML = `
+            <img src="${song.cover}" alt="${song.title}">
             <h4>${song.title}</h4>
             <p style="color: #b3b3b3; font-size: 14px;">${song.artist}</p>
         `;
@@ -48,7 +69,6 @@ function renderSongs(songsToDisplay) {
     });
 }
 
-// 5. INTERACCIÓN DEL MENÚ LATERAL
 function changeSection(section) {
     const title = document.getElementById('sectionTitle');
     document.getElementById('menu-inicio').classList.remove('active');
@@ -65,14 +85,19 @@ function changeSection(section) {
     }
 }
 
-// 6. CONTROLES DEL REPRODUCTOR
 function loadAndPlay(index) {
     currentIndex = index;
     audio.src = allSongs[currentIndex].src;
     document.getElementById('currentTitle').innerText = allSongs[currentIndex].title;
     document.getElementById('currentArtist').innerText = allSongs[currentIndex].artist;
-    audio.play();
-    playBtn.innerText = "⏸";
+    
+    // Intentar reproducir el archivo de audio real
+    audio.play().then(() => {
+        playBtn.innerText = "⏸";
+    }).catch(error => {
+        console.error("Error al reproducir audio:", error);
+        alert("El navegador bloqueó el audio o el archivo no está disponible. Intenta interactuar con la pantalla primero.");
+    });
 }
 
 function playSong() {
@@ -99,7 +124,6 @@ function prevSong() {
     loadAndPlay(currentIndex);
 }
 
-// 7. BARRA DE PROGRESO INTERACTIVA
 audio.addEventListener('timeupdate', () => {
     if (audio.duration) {
         progress.value = (audio.currentTime / audio.duration) * 100;
@@ -110,7 +134,6 @@ progress.addEventListener('input', () => {
     audio.currentTime = (progress.value / 100) * audio.duration;
 });
 
-// 8. DESCARGAR LA CANCIÓN EN REPRODUCCIÓN
 function downloadCurrentSong() {
     if (audio.src === "") {
         alert("Primero selecciona una canción para poder descargarla.");
