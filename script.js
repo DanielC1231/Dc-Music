@@ -1,28 +1,39 @@
 // Configuración automática con tu colección real de Archive.org
 const IDENTIFICADOR_COLECCION = "Trap-Latino_202607"; 
 
+// API de búsqueda de Archive.org (Esta NO se bloquea y trae todo el listado de inmediato)
+const apiUrl = `https://archive.org{IDENTIFICADOR_COLECCION}&fl[]=identifier&output=json`;
 const urlBase = `https://archive.org{IDENTIFICADOR_COLECCION}/`;
-const xmlUrl = `https://archive.org{IDENTIFICADOR_COLECCION}/${IDENTIFICADOR_COLECCION}_files.xml`;
 
-let allSongs = []; // Guarda el total de canciones cargadas
+let allSongs = []; 
 const songList = document.getElementById('songList');
 const audio = new Audio();
 let currentIndex = 0;
 const playBtn = document.getElementById('playBtn');
 const progress = document.getElementById('progress');
 
-// Cargar la lista automáticamente al abrir la página
-fetch(xmlUrl)
-    .then(response => response.text())
-    .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+// 1. CARGAR LAS CANCIONES DIRECTO DESDE LA API DE ARCHIVE
+fetch(apiUrl)
+    .then(response => response.json())
     .then(data => {
-        const files = data.getElementsByTagName("file");
+        // Obtenemos los metadatos de los archivos reales leyendo el manifest de la API
+        const filesUrl = `https://archive.org{IDENTIFICADOR_COLECCION}`;
+        return fetch(filesUrl);
+    })
+    .then(response => response.json())
+    .then(metadata => {
+        const files = metadata.files;
 
-        for (let file of files) {
-            const name = file.getAttribute("name");
-            const format = file.getElementsByTagName("format")[0]?.textContent;
+        if (!files || files.length === 0) {
+            songList.innerHTML = "<p>No se encontraron archivos en esta colección.</p>";
+            return;
+        }
 
-            // Filtra solo los formatos de audio MP3
+        // Filtramos y limpiamos los archivos de audio MP3
+        files.forEach(file => {
+            const name = file.name;
+            const format = file.format;
+
             if (name && (format === "MP3" || format === "VBR MP3")) {
                 let tituloLimpio = name.replace(".mp3", "").replace(/_/g, " ");
                 
@@ -32,24 +43,24 @@ fetch(xmlUrl)
                     src: urlBase + encodeURIComponent(name)
                 });
             }
-        }
+        });
 
+        // Pintamos el reproductor si detectó canciones
         if (allSongs.length > 0) {
             renderSongs(allSongs);
         } else {
-            songList.innerHTML = "<p>No se encontraron canciones en la colección.</p>";
+            songList.innerHTML = "<p>No hay canciones en formato MP3 todavía. Sube más música a tu colección.</p>";
         }
     })
     .catch(err => {
         console.error("Error al conectar:", err);
-        songList.innerHTML = "<p>Error al conectar con Archive.org.</p>";
+        songList.innerHTML = "<p>Error al conectar con los servidores de Archive.org. Intenta de nuevo más tarde.</p>";
     });
 
-// Función para pintar las canciones en la interfaz
+// 2. MOSTRAR CANCIONES EN LA INTERFAZ
 function renderSongs(songsToDisplay) {
     songList.innerHTML = "";
     songsToDisplay.forEach((song, index) => {
-        // Encontrar el índice real en la lista completa
         const realIndex = allSongs.findIndex(s => s.src === song.src);
         
         const card = document.createElement('div');
@@ -63,7 +74,7 @@ function renderSongs(songsToDisplay) {
     });
 }
 
-// Lógica para interactuar con el Menú Lateral
+// 3. LOGICA PARA INTERACTUAR CON EL MENÚ LATERAL
 function changeSection(section) {
     const title = document.getElementById('sectionTitle');
     document.getElementById('menu-inicio').classList.remove('active');
@@ -72,15 +83,15 @@ function changeSection(section) {
     if (section === 'inicio') {
         document.getElementById('menu-inicio').classList.add('active');
         title.innerText = "Buenos Días";
-        renderSongs(allSongs); // Muestra todo
+        renderSongs(allSongs); 
     } else if (section === 'biblioteca') {
         document.getElementById('menu-biblioteca').classList.add('active');
         title.innerText = "Tu Biblioteca (Colección Completa)";
-        renderSongs(allSongs); // Aquí puedes meter filtros en el futuro
+        renderSongs(allSongs); 
     }
 }
 
-// Controles del reproductor
+// 4. CONTROLES DEL REPRODUCTOR
 function loadAndPlay(index) {
     currentIndex = index;
     audio.src = allSongs[currentIndex].src;
@@ -114,7 +125,7 @@ function prevSong() {
     loadAndPlay(currentIndex);
 }
 
-// Barra de progreso interactiva
+// 5. BARRA DE PROGRESO INTERACTIVA
 audio.addEventListener('timeupdate', () => {
     if (audio.duration) {
         progress.value = (audio.currentTime / audio.duration) * 100;
@@ -125,18 +136,17 @@ progress.addEventListener('input', () => {
     audio.currentTime = (progress.value / 100) * audio.duration;
 });
 
-// NUEVA FUNCIÓN: Descargar la canción que está sonando
+// 6. FUNCIÓN PARA DESCARGAR LA CANCIÓN QUE ESTÁ REPRODUCIÉNDOSE
 function downloadCurrentSong() {
     if (audio.src === "") {
         alert("Primero selecciona una canción para poder descargarla.");
         return;
     }
     
-    // Crear un enlace invisible de descarga y hacerle clic automático
     const link = document.createElement('a');
     link.href = allSongs[currentIndex].src;
     link.download = `${allSongs[currentIndex].title}.mp3`;
-    link.target = "_blank"; // Asegura compatibilidad con navegadores móviles
+    link.target = "_blank"; 
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
