@@ -62,7 +62,7 @@ body {
     padding-bottom: 40px;
 }
 
-..card {
+...card {
     background-color: #181818;
     padding: 15px;
     border-radius: 8px;
@@ -74,23 +74,10 @@ body {
     background-color: #282828;
 }
 
-/* NUEVO: Estilo para la imagen de portada */
-.card img {
-    width: 100%;
-    aspect-ratio: 1; /* Hace la imagen perfectamente cuadrada */
-    object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 10px;
-}
-
 .card h4 {
-    margin: 5px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin: 10px 0 5px 0;
 }
 
-}
 
 /* Reproductor inferior */
 .player {

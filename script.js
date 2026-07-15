@@ -1,44 +1,59 @@
-// Enlace base de tu colección
+// 1. Enlace base de descarga de tus archivos
 const urlBase = "https://archive.org";
 
-// LISTA ACTUALIZADA CON LAS RUTAS REALES CORREGIDAS E IMÁGENES
-const songsData = [
-    {
-        title: "De las 2",
-        artist: "Trap Latino",
-        // Agregamos el formato exacto del servidor para que no se quede mudo
-        file: "De las 2.mp3", 
-        cover: "https://unsplash.com" // Imagen de prueba urbana
-    },
-    {
-        title: "Ella y Yo (Remix)",
-        artist: "Trap Latino",
-        file: "Ella y Yo (Remix).mp3",
-        cover: "https://unsplash.com"
-    },
-    {
-        title: "Diles (Remix)",
-        artist: "Trap Latino",
-        file: "Diles (Remix).mp3",
-        cover: "https://unsplash.com"
-    },
-    {
-        title: "Me Acostumbre",
-        artist: "Trap Latino",
-        file: "Me Acostumbre.mp3",
-        cover: "https://unsplash.com"
-    }
+// 2. Lista ordenada con los nombres EXACTOS del servidor (arregla el audio)
+const songs = [
+  {
+    title: "De las 2",
+    artist: "Trap Latino",
+    src: urlBase + "De%20las%202%20.mp3" // Notarás que tiene un espacio extra al final (%20)
+  },
+  {
+    title: "Diles",
+    artist: "Trap Latino",
+    src: urlBase + "Diles.mp3"
+  },
+  {
+    title: "Me Acostumbré",
+    artist: "Trap Latino (feat. Bad Bunny)",
+    src: urlBase + "Me%20Acostumbre%20%28feat.%20Bad%20Bunny%29.mp3"
+  },
+  {
+    title: "Ahora Me Llama",
+    artist: "Trap Latino",
+    src: urlBase + "Ahora%20Me%20Llama.mp3"
+  },
+  {
+    title: "Krippy Kush",
+    artist: "Trap Latino",
+    src: urlBase + "Krippy%20Kush.mp3"
+  },
+  {
+    title: "La Ocasión",
+    artist: "Trap Latino",
+    src: urlBase + "La%20Occas%20i%C3%B3n.mp3"
+  },
+  {
+    title: "Loca (Remix)",
+    artist: "Trap Latino",
+    src: urlBase + "Loca%20Remix.mp3"
+  },
+  {
+    title: "Si Tú Novio Te Deja Sola",
+    artist: "Trap Latino",
+    src: urlBase + "Si%20Tu%20Novio%20Te%20Deja%20Sola.mp3"
+  },
+  {
+    title: "Tú No Vive Así",
+    artist: "Trap Latino (feat. Arcángel)",
+    src: urlBase + "Tu%20No%20Vive%20Asi%20%28feat.%20Mambo%20Kingz%20%26%20DJ%20Luian%29.mp3"
+  },
+  {
+    title: "Soy Peor (7D)",
+    artist: "Trap Latino",
+    src: urlBase + "7D.mp3"
+  }
 ];
-
-// Procesamos el arreglo para armar las URL funcionales
-const allSongs = songsData.map(song => {
-    return {
-        title: song.title,
-        artist: song.artist,
-        cover: song.cover,
-        src: urlBase + encodeURIComponent(song.file)
-    };
-});
 
 const songList = document.getElementById('songList');
 const audio = new Audio();
@@ -46,9 +61,9 @@ let currentIndex = 0;
 const playBtn = document.getElementById('playBtn');
 const progress = document.getElementById('progress');
 
-// Imprimir canciones en pantalla
-if (allSongs.length > 0) {
-    renderSongs(allSongs);
+// Iniciar app pintando canciones
+if (songs.length > 0) {
+    renderSongs(songs);
 } else {
     songList.innerHTML = "<p>No hay canciones configuradas.</p>";
 }
@@ -58,9 +73,7 @@ function renderSongs(songsToDisplay) {
     songsToDisplay.forEach((song, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
-        // Agregamos la etiqueta <img> para la portada de la canción
         card.innerHTML = `
-            <img src="${song.cover}" alt="${song.title}">
             <h4>${song.title}</h4>
             <p style="color: #b3b3b3; font-size: 14px;">${song.artist}</p>
         `;
@@ -77,32 +90,28 @@ function changeSection(section) {
     if (section === 'inicio') {
         document.getElementById('menu-inicio').classList.add('active');
         title.innerText = "Buenos Días";
-        renderSongs(allSongs); 
+        renderSongs(songs); 
     } else if (section === 'biblioteca') {
         document.getElementById('menu-biblioteca').classList.add('active');
-        title.innerText = "Tu Biblioteca (Colección Completa)";
-        renderSongs(allSongs); 
+        title.innerText = "Tu Biblioteca";
+        renderSongs(songs); 
     }
 }
 
 function loadAndPlay(index) {
     currentIndex = index;
-    audio.src = allSongs[currentIndex].src;
-    document.getElementById('currentTitle').innerText = allSongs[currentIndex].title;
-    document.getElementById('currentArtist').innerText = allSongs[currentIndex].artist;
+    audio.src = songs[currentIndex].src;
+    document.getElementById('currentTitle').innerText = songs[currentIndex].title;
+    document.getElementById('currentArtist').innerText = songs[currentIndex].artist;
     
-    // Intentar reproducir el archivo de audio real
-    audio.play().then(() => {
-        playBtn.innerText = "⏸";
-    }).catch(error => {
-        console.error("Error al reproducir audio:", error);
-        alert("El navegador bloqueó el audio o el archivo no está disponible. Intenta interactuar con la pantalla primero.");
-    });
+    // Forzar reproducción directa limpia
+    audio.play();
+    playBtn.innerText = "⏸";
 }
 
 function playSong() {
     if (audio.src === "") {
-        if(allSongs.length > 0) loadAndPlay(0);
+        if(songs.length > 0) loadAndPlay(0);
         return;
     }
     if (audio.paused) {
@@ -115,12 +124,12 @@ function playSong() {
 }
 
 function nextSong() {
-    currentIndex = (currentIndex + 1) % allSongs.length;
+    currentIndex = (currentIndex + 1) % songs.length;
     loadAndPlay(currentIndex);
 }
 
 function prevSong() {
-    currentIndex = (currentIndex - 1 + allSongs.length) % allSongs.length;
+    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
     loadAndPlay(currentIndex);
 }
 
@@ -140,8 +149,8 @@ function downloadCurrentSong() {
         return;
     }
     const link = document.createElement('a');
-    link.href = allSongs[currentIndex].src;
-    link.download = `${allSongs[currentIndex].title}.mp3`;
+    link.href = songs[currentIndex].src;
+    link.download = `${songs[currentIndex].title}.mp3`;
     link.target = "_blank"; 
     document.body.appendChild(link);
     link.click();
