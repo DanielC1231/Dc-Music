@@ -8,6 +8,7 @@
 body {
     background-color: #000;
     color: #fff;
+    overflow: hidden;
 }
 
 .app {
@@ -25,18 +26,22 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #1DB954; /* El verde original de Spotify */
+    color: #1DB954; /* Verde original de Spotify */
 }
 
 .menu li {
     list-style: none;
-    padding: 12px 0;
+    padding: 12px 15px;
     color: #b3b3b3;
     cursor: pointer;
+    border-radius: 4px;
+    transition: 0.2s;
+    margin-bottom: 5px;
 }
 
-.menu li:hover {
+.menu li:hover, .menu li.active {
     color: #fff;
+    background-color: #282828;
 }
 
 .main-content {
@@ -54,6 +59,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 20px;
+    padding-bottom: 40px;
 }
 
 .card {
@@ -62,6 +68,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+    position: relative;
 }
 
 .card:hover {
@@ -70,8 +77,12 @@ body {
 
 .card h4 {
     margin: 10px 0 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/* Reproductor inferior */
 .player {
     position: fixed;
     bottom: 0;
@@ -83,24 +94,55 @@ body {
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
+    z-index: 100;
+}
+
+.player-left {
+    width: 30%;
+}
+
+#currentTitle {
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#currentArtist {
+    color: #b3b3b3;
+    font-size: 12px;
 }
 
 .player-center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    width: 40%;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
 }
 
 .player-center button {
     background: none;
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
     margin: 0 10px;
+    transition: transform 0.1s;
+}
+
+.player-center button:hover {
+    transform: scale(1.1);
 }
 
 #progress {
-    width: 300px;
+    width: 100%;
+    max-width: 400px;
+    cursor: pointer;
 }

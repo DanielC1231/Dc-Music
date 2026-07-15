@@ -8,22 +8,25 @@
 </head>
 <body>
     <div class="app">
-        <!-- Barra Lateral -->
+        <!-- Barra Lateral Interactiva -->
         <aside class="sidebar">
             <div class="logo">DC Music</div>
             <ul class="menu">
-                <li>🏠 Inicio</li>
-                <li>🔍 Buscar</li>
-                <li>📚 Tu Biblioteca</li>
+                <li id="menu-inicio" class="active" onclick="changeSection('inicio')">🏠 Inicio</li>
+                <li id="menu-biblioteca" onclick="changeSection('biblioteca')">📚 Tu Biblioteca</li>
             </ul>
         </aside>
 
         <!-- Contenido Principal -->
         <main class="main-content">
             <header class="header">
-                <h2>Buenos Días</h2>
+                <h2 id="sectionTitle">Buenos Días</h2>
             </header>
-            <div class="songs" id="songList"></div>
+            
+            <!-- Contenedor dinámico de canciones -->
+            <div class="songs" id="songList">
+                <p>Cargando tus canciones de Archive.org...</p>
+            </div>
         </main>
     </div>
 
@@ -34,9 +37,13 @@
             <div id="currentArtist">-</div>
         </div>
         <div class="player-center">
-            <button onclick="prevSong()">⏮</button>
-            <button id="playBtn" onclick="playSong()">▶</button>
-            <button onclick="nextSong()">⏭</button>
+            <div class="controls">
+                <button onclick="prevSong()">⏮</button>
+                <button id="playBtn" onclick="playSong()">▶</button>
+                <button onclick="nextSong()">⏭</button>
+                <!-- Botón de Descarga Directa -->
+                <button id="downloadBtn" onclick="downloadCurrentSong()" style="font-size: 16px; margin-left: 15px; color: #1DB954;" title="Descargar canción">📥</button>
+            </div>
             <input type="range" id="progress" value="0" min="0" max="100">
         </div>
     </div>
