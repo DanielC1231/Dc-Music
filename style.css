@@ -62,12 +62,13 @@ body {
     padding-bottom: 40px;
 }
 
-...card {
+.card {
     background-color: #181818;
     padding: 15px;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
+    position: relative;
 }
 
 .card:hover {
@@ -76,8 +77,10 @@ body {
 
 .card h4 {
     margin: 10px 0 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
 
 /* Reproductor inferior */
 .player {
