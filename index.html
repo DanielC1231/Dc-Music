@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DC Music</title>
+    <!-- Favicon (logo en la pestaña) -->
+    <link rel="icon" type="image/png" href="img/logo.png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app">
         <!-- Barra Lateral Interactiva -->
         <aside class="sidebar">
-            <div class="logo">DC Music</div>
+            <div class="logo">
+                <img src="img/logo.png" alt="DC Music" class="logo-img">
+                <span>DC Music</span>
+            </div>
             <ul class="menu">
                 <li id="menu-inicio" class="active" onclick="changeSection('inicio')">🏠 Inicio</li>
                 <li id="menu-descargas" onclick="changeSection('descargas')">📥 Descargas</li>
@@ -20,7 +25,13 @@
         <!-- Contenido Principal -->
         <main class="main-content">
             <header class="header">
-                <h2 id="sectionTitle">Buenos Días</h2>
+                <div class="header-left">
+                    <img src="img/logo.png" alt="DC Music" class="header-logo-img">
+                    <h2 id="sectionTitle">Buenos Días</h2>
+                </div>
+                <div class="header-right">
+                    <span class="song-counter" id="songCounter">0 canciones</span>
+                </div>
             </header>
             
             <!-- Contenedor dinámico de canciones -->
@@ -42,6 +53,10 @@
                 <button id="downloadBtn" onclick="downloadCurrentSong()" style="font-size: 16px; margin-left: 15px; color: #1DB954;" title="Descargar canción">📥</button>
             </div>
             <input type="range" id="progress" value="0" min="0" max="100">
+        </div>
+        <div class="player-right">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
         </div>
     </div>
 
