@@ -13,7 +13,7 @@
             <div class="logo">DC Music</div>
             <ul class="menu">
                 <li id="menu-inicio" class="active" onclick="changeSection('inicio')">🏠 Inicio</li>
-                <li id="menu-biblioteca" onclick="changeSection('biblioteca')">📚 Tu Biblioteca</li>
+                <li id="menu-descargas" onclick="changeSection('descargas')">📥 Descargas</li>
             </ul>
         </aside>
 
@@ -39,7 +39,6 @@
                 <button onclick="prevSong()">⏮</button>
                 <button id="playBtn" onclick="playSong()">▶</button>
                 <button onclick="nextSong()">⏭</button>
-                <!-- Botón de Descarga Directa -->
                 <button id="downloadBtn" onclick="downloadCurrentSong()" style="font-size: 16px; margin-left: 15px; color: #1DB954;" title="Descargar canción">📥</button>
             </div>
             <input type="range" id="progress" value="0" min="0" max="100">
