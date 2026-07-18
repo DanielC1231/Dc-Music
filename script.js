@@ -1,59 +1,58 @@
-// Lista definitiva de tus 48 canciones con enlaces completos y directos
-// ¡ATENCIÓN! Verifica que los nombres de los archivos .mp3 coincidan EXACTAMENTE
+// Lista definitiva de tus 48 canciones con enlaces completos
 const songs = [
   // --- FOTO 1 (1 al 16) ---
-  { title: "47", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/47.mp3" },
-  { title: "7D", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/7D.mp3" },
-  { title: "Ahora Me Llama", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Ahora+Me+Llama.mp3" },
-  { title: "Amigos y Enemigos (Remix)", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Amigos+y+Enemigos+(Remix).mp3" },
-  { title: "Armao 100Pre Andamos", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Armao+100Pre+Andamos.mp3" },
-  { title: "Bandido", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Bandido.mp3" },
-  { title: "Blockia", artist: "Trap Latino (feat. DJ Luian)", src: "https://archive.org/details/Trap-Latino_202607/Blockia+(feat.+DJ+Luian+%26+Mambo+Kingz).mp3" },
-  { title: "Caile", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Caile.mp3" },
-  { title: "Coronamos", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Coronamos.mp3" },  
-  { title: "Crecía", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Crec%C3%ADa.mp3" },
-  { title: "De las 2", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/De+las+2.mp3" },
-  { title: "Diablita", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Diablita.mp3" },
-  { title: "Diles", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Diles.mp3" },
-  { title: "El Farsante", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/El+Farsante.mp3" },
-  { title: "En la Intimidad", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/En+la+Intimidad.mp3" },
-  { title: "Escápate Conmigo", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Esc%C3%A1pate+Conmigo.mp3" },
+  { title: "47", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/47.mp3" },
+  { title: "7D", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/7D.mp3" },
+  { title: "Ahora Me Llama", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Ahora%20Me%20Llama.mp3" },
+  { title: "Amigos y Enemigos (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Amigos%20y%20Enemigos%20(Remix).mp3" },
+  { title: "Armao 100Pre Andamos", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Armao%20100Pre%20Andamos.mp3" },
+  { title: "Bandido", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Bandido.mp3" },
+  { title: "Blockia", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Blockia%20(feat.%20DJ%20Luian%20%26%20Mambo%20Kingz).mp3" },
+  { title: "Caile", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Caile.mp3" },
+  { title: "Coronamos", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Coronamos.mp3" },
+  { title: "Crecía", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Crec%C3%ADa.mp3" },
+  { title: "De las 2", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/De%20las%202.mp3" },
+  { title: "Diablita", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Diablita.mp3" },
+  { title: "Diles", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Diles.mp3" },
+  { title: "El Farsante", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/El%20Farsante.mp3" },
+  { title: "En la Intimidad", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/En%20la%20Intimidad.mp3" },
+  { title: "Escápate Conmigo", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Esc%C3%A1pate%20Conmigo.mp3" },
 
   // --- FOTO 2 (17 al 32) ---
-  { title: "Fronteamos Porque Podemos", artist: "Trap Latino (feat. Daddy Yankee, Yandel & Nengo Flow)", src: "https://archive.org/details/Trap-Latino_202607/Fronteamos+Porque+Podemos+(feat.+Daddy+Yankee%2C+Yandel+%26+Nengo+Flow).mp3" },
-  { title: "Hablame", artist: "Trap Latino (feat. Juanka Lyan Bryant Myers Y Anuel Aa)", src: "https://archive.org/details/Trap-Latino_202607/Hablame.mp3" },
-  { title: "Haters (Remix)", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Haters+(Remix).mp3" },
-  { title: "Hoy", artist: "Trap Latino (feat. Bad Bunny)", src: "https://archive.org/details/Trap-Latino_202607/Hoy+(feat.+Bad+Bunny).mp3" },
-  { title: "Krippy Kush", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Krippy+Kush.mp3" },
-  { title: "La Fórmula", artist: "Trap Latino (feat. Chris Jedi)", src: "https://archive.org/details/Trap-Latino_202607/La+F%C3%B3rmula+(feat.+Chris+Jedi).mp3" },
-  { title: "La Occasión", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/La+Ocasi%C3%B3n.mp3" },
-  { title: "La Rompe Corazones", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/La+Rompe+Corazones.mp3" },
-  { title: "La Última Vez", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/La+%C3%9Altima+Vez.mp3" },
-  { title: "Loca Remix", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Loca+Remix.mp3" },
-  { title: "Loca", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Loca.mp3" },
-  { title: "Me Acostumbre", artist: "Trap Latino (feat. Bad Bunny)", src: "https://archive.org/details/Trap-Latino_202607/Me+Acostumbre+(feat.+Bad+Bunny).mp3" },
-  { title: "Me Ama Me Odia", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Me+Ama+Me+Odia.mp3" },
-  { title: "Me Llamas", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Me+Llamas.mp3" },
-  { title: "Me Mata", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Me+Mata.mp3" },
-  { title: "Me Reclama", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Me+Reclama.mp3" },
+  { title: "Fronteamos Porque Podemos", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Fronteamos%20Porque%20Podemos%20(feat.%20Daddy%20Yankee%2C%20Yandel%20%26%20Nengo%20Flow).mp3" },
+  { title: "Hablame", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Hablame.mp3" },
+  { title: "Haters (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Haters%20(Remix).mp3" },
+  { title: "Hoy", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Hoy%20(feat.%20Bad%20Bunny).mp3" },
+  { title: "Krippy Kush", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Krippy%20Kush.mp3" },
+  { title: "La Fórmula", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20F%C3%B3rmula%20(feat.%20Chris%20Jedi).mp3" },
+  { title: "La Occasión", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20Ocasi%C3%B3n.mp3" },
+  { title: "La Rompe Corazones", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20Rompe%20Corazones.mp3" },
+  { title: "La Última Vez", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20%C3%9Altima%20Vez.mp3" },
+  { title: "Loca Remix", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Loca%20Remix.mp3" },
+  { title: "Loca", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Loca.mp3" },
+  { title: "Me Acostumbre", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Acostumbre%20(feat.%20Bad%20Bunny).mp3" },
+  { title: "Me Ama Me Odia", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Ama%20Me%20Odia.mp3" },
+  { title: "Me Llamas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Llamas.mp3" },
+  { title: "Me Mata", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Mata.mp3" },
+  { title: "Me Reclama", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Reclama.mp3" },
 
   // --- FOTO 3 (33 al 48) ---
-  { title: "Nacimos Pa Morir", artist: "Trap Latino (feat. Jory Boy)", src: "https://archive.org/details/Trap-Latino_202607/Nacimos+Pa+Morir+(feat.+Jory+Boy).mp3" },
-  { title: "No Te Hagas", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/No+Te+Hagas.mp3" },
-  { title: "No Te Miento (Remix)", artist: "Trap Latino (feat. Baby Rasta, Darkiel, Darell & Jory Boy)", src: "https://archive.org/details/Trap-Latino_202607/No+Te+Miento+(Remix).mp3" },
-  { title: "Nunca Sapo", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Nunca+Sapo.mp3" },
-  { title: "Otra Mujer", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Otra+Mujer.mp3" },
-  { title: "Panda", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Panda.mp3" },
-  { title: "Sexto Sentido", artist: "Trap Latino (feat. Bad Bunny)", src: "https://archive.org/details/Trap-Latino_202607/Sexto+Sentido+(feat.+Bad+Bunny).mp3" },
-  { title: "Si Tu Lo Dejas", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Si+Tu+Lo+Dejas.mp3" },
-  { title: "Si Tu Novio Te Deja Sola", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Si+Tu+Novio+Te+Deja+Sola.mp3" },
-  { title: "Solita", artist: "Trap Latino (feat. Bad Bunny, Wisin & Almighty)", src: "https://archive.org/details/Trap-Latino_202607/Solita+(feat.+Bad+Bunny%2C+Wisin+%26+Almighty).mp3" },
-  { title: "Sé Que Quieres (Remix)", artist: "Trap Latino (feat. Brytiago, Jon Z & Almighty)", src: "https://archive.org/details/Trap-Latino_202607/S%C3%A9+Que+Quieres+(Remix).mp3" },
-  { title: "Tu No Vive Asi", artist: "Trap Latino (feat. Mambo Kingz & DJ Luian)", src: "https://archive.org/details/Trap-Latino_202607/Tu+No+Vive+Asi+(feat.+Mambo+Kingz+%26+DJ+Luian).mp3" },
-  { title: "Tócate Tu Misma", artist: "Trap Latino (feat. Bad Bunny)", src: "https://archive.org/details/Trap-Latino_202607/T%C3%B3cate+Tu+Misma+(feat.+Bad+Bunny).mp3" },
-  { title: "Un Polvo", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Un+Polvo.mp3" },
-  { title: "Un Ratito Mas", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Un+Ratito+Mas.mp3" },
-  { title: "Vacio", artist: "Trap Latino", src: "https://archive.org/details/Trap-Latino_202607/Vacio.mp3" }
+  { title: "Nacimos Pa Morir", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Nacimos%20Pa%20Morir%20(feat.%20Jory%20Boy).mp3" },
+  { title: "No Te Hagas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/No%20Te%20Hagas.mp3" },
+  { title: "No Te Miento (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/No%20Te%20Miento%20(Remix).mp3" },
+  { title: "Nunca Sapo", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Nunca%20Sapo.mp3" },
+  { title: "Otra Mujer", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Otra%20Mujer.mp3" },
+  { title: "Panda", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Panda.mp3" },
+  { title: "Sexto Sentido", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Sexto%20Sentido%20(feat.%20Bad%20Bunny).mp3" },
+  { title: "Si Tu Lo Dejas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Si%20Tu%20Lo%20Dejas.mp3" },
+  { title: "Si Tu Novio Te Deja Sola", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Si%20Tu%20Novio%20Te%20Deja%20Sola.mp3" },
+  { title: "Solita", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Solita%20(feat.%20Bad%20Bunny%2C%20Wisin%20%26%20Almighty).mp3" },
+  { title: "Sé Que Quieres (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/S%C3%A9%20Que%20Quieres%20(Remix).mp3" },
+  { title: "Tu No Vive Asi", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Tu%20No%20Vive%20Asi%20(feat.%20Mambo%20Kingz%20%26%20DJ%20Luian).mp3" },
+  { title: "Tócate Tu Misma", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/T%C3%B3cate%20Tu%20Misma%20(feat.%20Bad%20Bunny).mp3" },
+  { title: "Un Polvo", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Un%20Polvo.mp3" },
+  { title: "Un Ratito Mas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Un%20Ratito%20Mas.mp3" },
+  { title: "Vacio", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Vacio.mp3" }
 ];
 
 const songList = document.getElementById('songList');
@@ -63,12 +62,6 @@ const playBtn = document.getElementById('playBtn');
 const progress = document.getElementById('progress');
 
 // Pintar las canciones al cargar la interfaz
-if (songs.length > 0) {
-    renderSongs(songs);
-} else {
-    songList.innerHTML = "<p>No hay canciones configuradas.</p>";
-}
-
 function renderSongs(songsToDisplay) {
     songList.innerHTML = "";
     songsToDisplay.forEach((song, index) => {
@@ -81,6 +74,13 @@ function renderSongs(songsToDisplay) {
         card.onclick = () => loadAndPlay(index);
         songList.appendChild(card);
     });
+}
+
+// Cargar canciones iniciales
+if (songs.length > 0) {
+    renderSongs(songs);
+} else {
+    songList.innerHTML = "<p>No hay canciones configuradas.</p>";
 }
 
 // Lógica de navegación del menú lateral
@@ -144,14 +144,13 @@ audio.addEventListener('timeupdate', () => {
     }
 });
 
-// NUEVO FIJADO: Cierre correcto de la barra de progreso
 progress.addEventListener('input', () => {
     if (audio.duration) {
         audio.currentTime = (progress.value / 100) * audio.duration;
     }
 });
 
-// Función para descargar la pista activa (CORREGIDA, SIN LA COMA)
+// Función para descargar la pista activa
 function downloadCurrentSong() {
     if (audio.src === "") {
         alert("Primero selecciona una canción para poder descargarla.");
