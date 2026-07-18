@@ -26,7 +26,7 @@ body {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 30px;
-    color: #1DB954; /* Verde original de Spotify */
+    color: #1DB954;
 }
 
 .menu li {
@@ -145,4 +145,18 @@ body {
     width: 100%;
     max-width: 400px;
     cursor: pointer;
+}
+
+/* Estilo para canciones descargadas */
+.card.descargada {
+    border-left: 4px solid #1DB954;
+}
+
+.card.descargada::after {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #1DB954;
+    font-weight: bold;
 }
