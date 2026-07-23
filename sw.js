@@ -7,19 +7,18 @@ const OFFLINE_CACHE = 'dc-music-offline-v1';
 
 // Archivos que deben estar disponibles offline
 const FILES_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/manifest.json',
-  '/img/logo.png',
-  '/img/logo-192x192.png',
-  '/img/logo-512x512.png'
-  // Agrega aquí todas las imágenes y archivos que necesites
+  '/Dc-Music/',
+  '/Dc-Music/index.html',
+  '/Dc-Music/style.css',
+  '/Dc-Music/script.js',
+  '/Dc-Music/manifest.json',
+  '/Dc-Music/img/logo.png',
+  '/Dc-Music/img/logo-192x192.png',
+  '/Dc-Music/img/logo-512x512.png'
 ];
 
 // ==========================================
-// INSTALACIÓN - Guardar archivos en caché
+// INSTALACIÓN
 // ==========================================
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -36,7 +35,7 @@ self.addEventListener('install', (event) => {
 });
 
 // ==========================================
-// ACTIVACIÓN - Limpiar cachés viejos
+// ACTIVACIÓN
 // ==========================================
 self.addEventListener('activate', (event) => {
   event.waitUntil(
@@ -55,39 +54,33 @@ self.addEventListener('activate', (event) => {
 });
 
 // ==========================================
-// INTERCEPTAR PETICIONES - Estrategia: Cache First
+// INTERCEPTAR PETICIONES
 // ==========================================
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
 
-  // Si es una canción FLAC, intentar servirla desde caché
-  if (url.pathname.endsWith('.flac') || url.pathname.includes('archive.org')) {
+  // Si es una canción FLAC o de archive.org
+  if (url.pathname.endsWith('.flac') || url.hostname.includes('archive.org')) {
     event.respondWith(
       caches.match(request)
         .then((response) => {
-          // Si está en caché, devolverla
           if (response) {
-            console.log('📀 Canción desde caché:', url.pathname);
+            console.log('📀 Canción desde caché');
             return response;
           }
-          // Si no, intentar descargar
           return fetch(request)
             .then((response) => {
-              // Guardar en caché para futuras veces
               if (response && response.status === 200) {
                 const clonedResponse = response.clone();
                 caches.open(CACHE_NAME)
                   .then((cache) => {
                     cache.put(request, clonedResponse);
-                    console.log('💾 Canción guardada en caché:', url.pathname);
                   });
               }
               return response;
             })
             .catch(() => {
-              // Si no hay internet y no está en caché
-              console.log('❌ No se pudo cargar:', url.pathname);
               return new Response('No disponible offline', { status: 404 });
             });
         })
@@ -103,11 +96,8 @@ self.addEventListener('fetch', (event) => {
           console.log('📄 Desde caché:', url.pathname);
           return response;
         }
-        
-        // Si no está en caché, descargar
         return fetch(request)
           .then((response) => {
-            // Guardar en caché para futuras veces
             if (response && response.status === 200) {
               const clonedResponse = response.clone();
               caches.open(OFFLINE_CACHE)
@@ -118,9 +108,8 @@ self.addEventListener('fetch', (event) => {
             return response;
           })
           .catch(() => {
-            // Si no hay internet y no está en caché
             if (url.pathname.endsWith('.html')) {
-              return caches.match('/index.html');
+              return caches.match('/Dc-Music/index.html');
             }
             return new Response('No disponible offline', { status: 404 });
           });
