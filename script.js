@@ -1,134 +1,170 @@
-// Lista de canciones
+// ==========================================
+// LISTA DE CANCIONES EN FLAC (ALTA CALIDAD)
+// ==========================================
 const songs = [
-  // --- FOTO 1 (1 al 16) ---
-  { id: 1, title: "47", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/47.mp3" },
-  { id: 2, title: "7D", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/7D.mp3" },
-  { id: 3, title: "Ahora Me Llama", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Ahora%20Me%20Llama.mp3" },
-  { id: 4, title: "Amigos y Enemigos (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Amigos%20y%20Enemigos%20(Remix).mp3" },
-  { id: 5, title: "Armao 100Pre Andamos", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Armao%20100Pre%20Andamos.mp3" },
-  { id: 6, title: "Bandido", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Bandido.mp3" },
-  { id: 7, title: "Blockia", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Blockia%20(feat.%20DJ%20Luian%20%26%20Mambo%20Kingz).mp3" },
-  { id: 8, title: "Caile", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Caile.mp3" },
-  { id: 9, title: "Coronamos", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Coronamos.mp3" },
-  { id: 10, title: "Crecía", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Crec%C3%ADa.mp3" },
-  { id: 11, title: "De las 2", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/De%20las%202.mp3" },
-  { id: 12, title: "Diablita", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Diablita.mp3" },
-  { id: 13, title: "Diles", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Diles.mp3" },
-  { id: 14, title: "El Farsante", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/El%20Farsante.mp3" },
-  { id: 15, title: "En la Intimidad", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/En%20la%20Intimidad.mp3" },
-  { id: 16, title: "Escápate Conmigo", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Esc%C3%A1pate%20Conmigo.mp3" },
+  // --- De la primera imagen (1 al 8) ---
+  { 
+    id: 1, 
+    title: "Fanático del Full", 
+    artist: "Darell, Baby Rasta & Nengo Flow", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/01+-+Fan%C3%A1tico+del+Full+(feat.+Darell%2C+Baby+Rasta+%26+%C3%91engo+Flow)+(1).flac" 
+  },
+  { 
+    id: 2, 
+    title: "Cuatro Babys", 
+    artist: "Trap Capos, Noriel, Bryant Myers & Juhn", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/02+-+Cuatro+Babys+(feat.+Trap+Capos%2C+Noriel%2C+Bryant+Myers+%26+Juhn)+(1).flac" 
+  },
+  { 
+    id: 3, 
+    title: "Diablita", 
+    artist: "Anuel AA & Baby Rasta", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/03+-+Diablita+(feat.+Anuel+AA+%26+Baby+Rasta)+(1).flac" 
+  },
+  { 
+    id: 4, 
+    title: "Amigos y Enemigos", 
+    artist: "Trap Latino", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04+-+Amigos+y+Enemigos+(Remix)+(1).flac" 
+  },
+  { 
+    id: 5, 
+    title: "La Llamada", 
+    artist: "Darkiel, Almighty, Brytiago & Bryant Myers", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/05+-+La+Llamada+(feat.+Darkiel%2C+Almighty%2C+Brytiago+%26+Bryant+Myers)+(1).flac" 
+  },
+  { 
+    id: 6, 
+    title: "Quieres Enamorarme", 
+    artist: "Bryant Myers, Juhn & Baby Rasta", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/06+-+Quieres+Enamorarme+(feat.+Bryant+Myers%2C+Juhn+%26+Baby+Rasta)+(1).flac" 
+  },
+  { 
+    id: 7, 
+    title: "Me Pelea", 
+    artist: "Baby Rasta, Lito Kirino, Miky Woodz, Juhn & Jochy", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07+-+Me+Pelea+(feat.+Baby+Rasta%2C+Lito+Kirino%2C+Miky+Woodz%2C+Juhn+%26+Jochy)+(1).flac" 
+  },
+  { 
+    id: 8, 
+    title: "Como Glopeta", 
+    artist: "Gigolo y La Exce, Miky Woodz, Juhn & Baby Angel", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08+-+Como+Glopeta+(feat.+Gigolo+y+La+Exce%2C+Miky+Woodz%2C+Juhn+%26+Baby+Angel)+(1).flac" 
+  },
 
-  // --- FOTO 2 (17 al 32) ---
-  { id: 17, title: "Fronteamos Porque Podemos", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Fronteamos%20Porque%20Podemos%20(feat.%20Daddy%20Yankee%2C%20Yandel%20%26%20Nengo%20Flow).mp3" },
-  { id: 18, title: "Hablame", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Hablame.mp3" },
-  { id: 19, title: "Haters (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Haters%20(Remix).mp3" },
-  { id: 20, title: "Hoy", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Hoy%20(feat.%20Bad%20Bunny).mp3" },
-  { id: 21, title: "Krippy Kush", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Krippy%20Kush.mp3" },
-  { id: 22, title: "La Fórmula", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20F%C3%B3rmula%20(feat.%20Chris%20Jedi).mp3" },
-  { id: 23, title: "La Occasión", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20Ocasi%C3%B3n.mp3" },
-  { id: 24, title: "La Rompe Corazones", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20Rompe%20Corazones.mp3" },
-  { id: 25, title: "La Última Vez", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/La%20%C3%9Altima%20Vez.mp3" },
-  { id: 26, title: "Loca Remix", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Loca%20Remix.mp3" },
-  { id: 27, title: "Loca", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Loca.mp3" },
-  { id: 28, title: "Me Acostumbre", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Acostumbre%20(feat.%20Bad%20Bunny).mp3" },
-  { id: 29, title: "Me Ama Me Odia", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Ama%20Me%20Odia.mp3" },
-  { id: 30, title: "Me Llamas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Llamas.mp3" },
-  { id: 31, title: "Me Mata", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Mata.mp3" },
-  { id: 32, title: "Me Reclama", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Me%20Reclama.mp3" },
-
-  // --- FOTO 3 (33 al 48) ---
-  { id: 33, title: "Nacimos Pa Morir", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Nacimos%20Pa%20Morir%20(feat.%20Jory%20Boy).mp3" },
-  { id: 34, title: "No Te Hagas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/No%20Te%20Hagas.mp3" },
-  { id: 35, title: "No Te Miento (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/No%20Te%20Miento%20(Remix).mp3" },
-  { id: 36, title: "Nunca Sapo", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Nunca%20Sapo.mp3" },
-  { id: 37, title: "Otra Mujer", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Otra%20Mujer.mp3" },
-  { id: 38, title: "Panda", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Panda.mp3" },
-  { id: 39, title: "Sexto Sentido", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Sexto%20Sentido%20(feat.%20Bad%20Bunny).mp3" },
-  { id: 40, title: "Si Tu Lo Dejas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Si%20Tu%20Lo%20Dejas.mp3" },
-  { id: 41, title: "Si Tu Novio Te Deja Sola", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Si%20Tu%20Novio%20Te%20Deja%20Sola.mp3" },
-  { id: 42, title: "Solita", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Solita%20(feat.%20Bad%20Bunny%2C%20Wisin%20%26%20Almighty).mp3" },
-  { id: 43, title: "Sé Que Quieres (Remix)", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/S%C3%A9%20Que%20Quieres%20(Remix).mp3" },
-  { id: 44, title: "Tu No Vive Asi", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Tu%20No%20Vive%20Asi%20(feat.%20Mambo%20Kingz%20%26%20DJ%20Luian).mp3" },
-  { id: 45, title: "Tócate Tu Misma", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/T%C3%B3cate%20Tu%20Misma%20(feat.%20Bad%20Bunny).mp3" },
-  { id: 46, title: "Un Polvo", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Un%20Polvo.mp3" },
-  { id: 47, title: "Un Ratito Mas", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Un%20Ratito%20Mas.mp3" },
-  { id: 48, title: "Vacio", artist: "Trap Latino", src: "https://archive.org/download/Trap-Latino_202607/Vacio.mp3" }
+  // --- De la segunda imagen (9 al 14) ---
+  { 
+    id: 9, 
+    title: "La Paso Cabrón", 
+    artist: "Gigolo y La Exce, Falsetto y Sammy, Mike Duran & Baby Angel", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09+-+La+Paso+Cabr%C3%B3n+(feat.+Gigolo+y+La+Exce%2C+Falsetto+y+Sammy%2C+Mike+Duran+%26+Baby+Angel)+(1).flac" 
+  },
+  { 
+    id: 10, 
+    title: "Plo Plo", 
+    artist: "Baby Rasta, Juanika, Nengo Flow & Pacho", 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10+-+Plo+Plo+(feat.+Baby+Rasta%2C+Juanika%2C+%C3%91engo+Flow+%26+Pacho)+(1).flac" 
+  }
+  // Nota: Las canciones 11-16 no están en la imagen, pero si las tienes, 
+  // puedes agregarlas aquí con el mismo patrón de URL
 ];
 
-// ========== CONFIGURACIÓN DE CACHÉ ==========
-const CACHE_NAME = 'dc-music-cache-v1';
+// ==========================================
+// CONFIGURACIÓN DE CACHÉ (para FLAC también)
+// ==========================================
+const CACHE_NAME = 'dc-music-flac-cache-v1';
 let downloadedSongs = [];
 
-// Cargar lista de canciones descargadas desde localStorage
 function loadDownloadedSongs() {
     try {
         const saved = localStorage.getItem('downloadedSongs');
-        if (saved) {
-            downloadedSongs = JSON.parse(saved);
-        }
+        if (saved) downloadedSongs = JSON.parse(saved);
     } catch (e) {
         downloadedSongs = [];
     }
 }
 
-// Guardar lista de canciones descargadas
 function saveDownloadedSongs() {
     localStorage.setItem('downloadedSongs', JSON.stringify(downloadedSongs));
 }
 
-// Verificar si una canción está descargada
 function isSongDownloaded(songId) {
     return downloadedSongs.includes(songId);
 }
 
-// ========== SALUDO DINÁMICO ==========
+// ==========================================
+// SALUDO DINÁMICO
+// ==========================================
 function getGreeting() {
     const hour = new Date().getHours();
     if (hour >= 6 && hour < 12) return "Buenos Días";
     if (hour >= 12 && hour < 18) return "Buenas Tardes";
     if (hour >= 18 && hour < 22) return "Buenas Noches";
-    return "Buenas Noches"; // De 22 a 6
+    return "Buenas Noches";
 }
 
-// ========== ELEMENTOS DOM ==========
+// ==========================================
+// ELEMENTOS DOM
+// ==========================================
 const songList = document.getElementById('songList');
 const audio = new Audio();
 let currentIndex = 0;
 const playBtn = document.getElementById('playBtn');
 const progress = document.getElementById('progress');
+const currentTimeDisplay = document.getElementById('currentTime');
+const totalTimeDisplay = document.getElementById('totalTime');
+const songCounter = document.getElementById('songCounter');
 let currentSection = 'inicio';
 
-// ========== FUNCIONES PRINCIPALES ==========
+// ==========================================
+// FUNCIONES PRINCIPALES
+// ==========================================
 function renderSongs(songsToDisplay, section = 'inicio') {
     songList.innerHTML = "";
     
     if (songsToDisplay.length === 0) {
-        songList.innerHTML = `<p style="color: #b3b3b3; text-align: center; padding: 40px;">
+        songList.innerHTML = `<p style="color: #b3b3b3; text-align: center; padding: 40px; font-size: 16px;">
             ${section === 'descargas' ? '📭 No tienes canciones descargadas aún' : '🎵 No hay canciones disponibles'}
         </p>`;
+        songCounter.textContent = '0 canciones';
         return;
     }
+
+    songCounter.textContent = `${songsToDisplay.length} canciones • FLAC`;
 
     songsToDisplay.forEach((song, index) => {
         const card = document.createElement('div');
         card.classList.add('card');
+        card.dataset.index = index;
         
-        // Marcar si está descargada
         if (isSongDownloaded(song.id)) {
             card.classList.add('descargada');
         }
         
+        if (song.id === songs[currentIndex]?.id && audio.src !== "") {
+            card.classList.add('playing');
+        }
+        
         card.innerHTML = `
             <h4>${song.title}</h4>
-            <p style="color: #b3b3b3; font-size: 14px;">${song.artist}</p>
+            <p>${song.artist}</p>
+            <span style="font-size: 10px; color: #1DB954; display: block; margin-top: 4px;">🎵 FLAC</span>
         `;
         
-        card.onclick = () => loadAndPlay(index);
+        card.onclick = () => {
+            const realIndex = songs.findIndex(s => s.id === song.id);
+            if (realIndex !== -1) {
+                loadAndPlay(realIndex);
+            }
+        };
+        
         songList.appendChild(card);
     });
 }
 
-// ========== DESCARGA Y CACHÉ ==========
+// ==========================================
+// DESCARGA Y CACHÉ (para FLAC)
+// ==========================================
 async function downloadCurrentSong() {
     if (audio.src === "") {
         alert("Primero selecciona una canción para descargar.");
@@ -137,23 +173,16 @@ async function downloadCurrentSong() {
 
     const song = songs[currentIndex];
     
-    // Si ya está descargada, preguntar si quiere eliminarla
     if (isSongDownloaded(song.id)) {
         if (confirm(`¿Quieres eliminar "${song.title}" de tus descargas?`)) {
-            // Eliminar del caché
             try {
                 const cache = await caches.open(CACHE_NAME);
                 await cache.delete(song.src);
                 downloadedSongs = downloadedSongs.filter(id => id !== song.id);
                 saveDownloadedSongs();
                 
-                // Actualizar la vista
-                if (currentSection === 'descargas') {
-                    renderSongs(getFilteredSongs(), 'descargas');
-                } else {
-                    renderSongs(songs, 'inicio');
-                }
-                
+                const available = getFilteredSongs();
+                renderSongs(available, currentSection);
                 alert(`"${song.title}" eliminada de descargas.`);
             } catch (error) {
                 console.error('Error al eliminar:', error);
@@ -163,7 +192,6 @@ async function downloadCurrentSong() {
         return;
     }
 
-    // Descargar la canción
     try {
         const response = await fetch(song.src);
         if (!response.ok) throw new Error('Error al descargar');
@@ -172,25 +200,18 @@ async function downloadCurrentSong() {
         const cache = await caches.open(CACHE_NAME);
         await cache.put(song.src, new Response(blob));
         
-        // Guardar en la lista de descargadas
         downloadedSongs.push(song.id);
         saveDownloadedSongs();
         
-        // Actualizar la vista
-        if (currentSection === 'descargas') {
-            renderSongs(getFilteredSongs(), 'descargas');
-        } else {
-            renderSongs(songs, 'inicio');
-        }
-        
-        alert(`✅ "${song.title}" descargada exitosamente. Ahora está en tus descargas.`);
+        const available = getFilteredSongs();
+        renderSongs(available, currentSection);
+        alert(`✅ "${song.title}" descargada en FLAC.`);
     } catch (error) {
         console.error('Error al descargar:', error);
         alert('❌ Error al descargar la canción. Inténtalo de nuevo.');
     }
 }
 
-// Obtener canciones filtradas (descargas o todas)
 function getFilteredSongs() {
     if (currentSection === 'descargas') {
         return songs.filter(song => downloadedSongs.includes(song.id));
@@ -198,52 +219,66 @@ function getFilteredSongs() {
     return songs;
 }
 
-// ========== NAVEGACIÓN ==========
+// ==========================================
+// NAVEGACIÓN
+// ==========================================
 function changeSection(section) {
     currentSection = section;
     const title = document.getElementById('sectionTitle');
     
-    // Actualizar menú
     document.querySelectorAll('.menu li').forEach(li => li.classList.remove('active'));
     
     if (section === 'inicio') {
         document.getElementById('menu-inicio').classList.add('active');
-        title.innerText = getGreeting();
+        title.innerText = getGreeting() + " • FLAC";
         renderSongs(songs, 'inicio');
     } else if (section === 'descargas') {
         document.getElementById('menu-descargas').classList.add('active');
-        title.innerText = "📥 Tus Descargas";
+        title.innerText = "📥 Tus Descargas • FLAC";
         const downloaded = getFilteredSongs();
         renderSongs(downloaded, 'descargas');
     }
 }
 
-// ========== CONTROLES DEL REPRODUCTOR ==========
+// ==========================================
+// CONTROLES DEL REPRODUCTOR
+// ==========================================
 function loadAndPlay(index) {
-    const songListToUse = getFilteredSongs();
-    if (songListToUse.length === 0) return;
+    const song = songs[index];
+    if (!song) return;
     
-    // Encontrar el índice real en el array completo
-    const realIndex = songs.findIndex(s => s.id === songListToUse[index].id);
-    currentIndex = realIndex;
+    currentIndex = index;
+    progress.value = 0;
+    audio.currentTime = 0;
+    currentTimeDisplay.textContent = '0:00';
     
-    const song = songs[currentIndex];
     audio.src = song.src;
     document.getElementById('currentTitle').innerText = song.title;
     document.getElementById('currentArtist').innerText = song.artist;
     
+    const available = getFilteredSongs();
+    renderSongs(available, currentSection);
+    
     audio.load();
     audio.play().then(() => {
         playBtn.innerText = "⏸";
-    }).catch(e => console.log("Esperando acción del usuario"));
+    }).catch(e => {
+        console.log("Esperando interacción del usuario");
+        playBtn.innerText = "▶";
+    });
 }
 
 function playSong() {
     if (audio.src === "") {
         const available = getFilteredSongs();
-        if (available.length > 0) loadAndPlay(0);
+        if (available.length > 0) {
+            const firstSong = available[0];
+            const realIndex = songs.findIndex(s => s.id === firstSong.id);
+            loadAndPlay(realIndex);
+        }
         return;
     }
+    
     if (audio.paused) {
         audio.play();
         playBtn.innerText = "⏸";
@@ -257,12 +292,11 @@ function nextSong() {
     const available = getFilteredSongs();
     if (available.length === 0) return;
     
-    // Buscar índice actual en la lista filtrada
     const currentId = songs[currentIndex].id;
     const currentFilteredIndex = available.findIndex(s => s.id === currentId);
-    
     const nextFilteredIndex = (currentFilteredIndex + 1) % available.length;
-    loadAndPlay(nextFilteredIndex);
+    const realIndex = songs.findIndex(s => s.id === available[nextFilteredIndex].id);
+    loadAndPlay(realIndex);
 }
 
 function prevSong() {
@@ -271,16 +305,34 @@ function prevSong() {
     
     const currentId = songs[currentIndex].id;
     const currentFilteredIndex = available.findIndex(s => s.id === currentId);
-    
     const prevFilteredIndex = (currentFilteredIndex - 1 + available.length) % available.length;
-    loadAndPlay(prevFilteredIndex);
+    const realIndex = songs.findIndex(s => s.id === available[prevFilteredIndex].id);
+    loadAndPlay(realIndex);
 }
 
-// ========== PROGRESO ==========
+// ==========================================
+// PROGRESO Y TIEMPO
+// ==========================================
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
 audio.addEventListener('timeupdate', () => {
     if (audio.duration) {
-        progress.value = (audio.currentTime / audio.duration) * 100;
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progress.value = percent;
+        currentTimeDisplay.textContent = formatTime(audio.currentTime);
+        totalTimeDisplay.textContent = formatTime(audio.duration);
     }
+});
+
+audio.addEventListener('loadedmetadata', () => {
+    progress.value = 0;
+    currentTimeDisplay.textContent = '0:00';
+    totalTimeDisplay.textContent = formatTime(audio.duration);
 });
 
 progress.addEventListener('input', () => {
@@ -289,18 +341,20 @@ progress.addEventListener('input', () => {
     }
 });
 
-// ========== INICIALIZACIÓN ==========
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
 loadDownloadedSongs();
 
-// Establecer saludo inicial
-document.getElementById('sectionTitle').innerText = getGreeting();
+document.getElementById('sectionTitle').innerText = getGreeting() + " • FLAC";
 
-// Renderizar canciones
 if (songs.length > 0) {
     renderSongs(songs, 'inicio');
+    songCounter.textContent = `${songs.length} canciones • FLAC`;
 } else {
     songList.innerHTML = "<p>No hay canciones configuradas.</p>";
+    songCounter.textContent = '0 canciones';
 }
 
-console.log(`🎵 DC Music cargado - ${songs.length} canciones disponibles`);
-console.log(`📥 ${downloadedSongs.length} canciones descargadas`);
+console.log(`🎵 DC Music FLAC cargado - ${songs.length} canciones en FLAC`);
+console.log(`📥 ${downloadedSongs.length} canciones descargadas en FLAC`);
