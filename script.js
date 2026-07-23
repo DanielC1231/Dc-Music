@@ -1,9 +1,10 @@
 // ==========================================
-// SISTEMA DE LETRAS AUTOMÁTICO
+// SISTEMA DE LETRAS AUTOMÁTICO (MEJORADO)
 // ==========================================
 let lyricsData = [];
 let currentLyricIndex = -1;
 let lyricsVisible = false;
+let lyricsAvailable = false; // ← NUEVO: saber si hay letras
 
 // Crear contenedor de letras
 const lyricsDisplay = document.createElement('div');
@@ -48,10 +49,11 @@ lyricsStyle.textContent = `
     }
 `;
 document.head.appendChild(lyricsStyle);
-
 document.body.appendChild(lyricsDisplay);
 
-// Botón de letras
+// ==========================================
+// BOTÓN DE LETRAS (se crea pero se oculta si no hay letras)
+// ==========================================
 const lyricsToggle = document.createElement('button');
 lyricsToggle.id = 'lyricsToggle';
 lyricsToggle.innerHTML = '📝 Letras';
@@ -65,6 +67,7 @@ lyricsToggle.style.cssText = `
     border-radius: 20px;
     transition: all 0.3s;
     margin-left: 10px;
+    display: none; /* ← OCULTO POR DEFECTO */
 `;
 
 lyricsToggle.onmouseover = () => {
@@ -75,7 +78,7 @@ lyricsToggle.onmouseout = () => {
 };
 lyricsToggle.onclick = toggleLyrics;
 
-// Insertar botón en los controles
+// Insertar botón en los controles (pero oculto)
 document.querySelector('.controls').appendChild(lyricsToggle);
 
 // ==========================================
@@ -91,69 +94,118 @@ async function loadLyrics(songId) {
             .replace(/[^a-zA-Z0-9 ]/g, '')
             .trim();
         
-        // Intentar cargar .txt primero
+        // Intentar cargar .txt
         let response = await fetch(`lyrics/${cleanTitle}.txt`);
         
         if (!response.ok) {
-            // Intentar con el nombre original
             response = await fetch(`lyrics/${song.title}.txt`);
         }
         
         if (!response.ok) {
+            // No hay letras → ocultar botón
+            lyricsAvailable = false;
+            lyricsToggle.style.display = 'none';
             lyricsData = [];
-            console.log('No se encontraron letras para:', song.title);
+            console.log('📝 No hay letras para:', song.title);
             return;
         }
         
         const text = await response.text();
-        // Guardar la letra como un solo bloque
+        // Guardar la letra como un solo bloque (sin sincronizar)
         lyricsData = text.split('\n').filter(line => line.trim() !== '');
-        console.log(`✅ Letras cargadas: ${lyricsData.length} líneas`);
+        
+        // VERIFICAR SI ESTÁ SINCRONIZADA (formato [mm:ss.xx])
+        const hasSync = lyricsData.some(line => /\[\d{2}:\d{2}(\.\d{2})?\]/.test(line));
+        
+        if (hasSync) {
+            console.log('✅ Letras SINCronizadas:', lyricsData.length, 'líneas');
+        } else {
+            console.log('📝 Letras PLANAS (sin sincronizar):', lyricsData.length, 'líneas');
+        }
+        
+        // Hay letras → mostrar botón
+        lyricsAvailable = true;
+        lyricsToggle.style.display = 'inline-block';
         
     } catch (error) {
         console.log('Error al cargar letras:', error);
+        lyricsAvailable = false;
+        lyricsToggle.style.display = 'none';
         lyricsData = [];
     }
 }
 
 // ==========================================
-// MOSTRAR LETRAS EN TIEMPO REAL
+// MOSTRAR LETRAS (SINCRONIZADAS O PLANAS)
 // ==========================================
 function updateLyricsDisplay() {
     if (!lyricsVisible || lyricsData.length === 0) {
         return;
     }
     
-    // Mostrar la letra completa con desplazamiento automático
-    const currentTime = audio.currentTime;
-    const totalDuration = audio.duration || 300; // 5 minutos por defecto
-    
-    // Calcular qué parte de la letra mostrar basado en el tiempo
-    const progress = currentTime / totalDuration;
-    const totalLines = lyricsData.length;
-    const currentLine = Math.floor(progress * totalLines);
-    
-    // Mostrar un bloque de líneas alrededor de la posición actual
-    const contextLines = 5; // Líneas antes y después
-    const startLine = Math.max(0, currentLine - contextLines);
-    const endLine = Math.min(totalLines, currentLine + contextLines + 1);
+    // Verificar si está sincronizada
+    const hasSync = lyricsData.some(line => /\[\d{2}:\d{2}(\.\d{2})?\]/.test(line));
     
     let displayText = '';
-    for (let i = startLine; i < endLine; i++) {
-        if (i === currentLine) {
-            displayText += `<span style="color: #1DB954; font-weight: bold; font-size: 18px;">▶ ${lyricsData[i]}</span><br>`;
-        } else {
-            displayText += `${lyricsData[i]}<br>`;
+    
+    if (hasSync) {
+        // ===== MODO SINCRONIZADO =====
+        const currentTime = audio.currentTime;
+        let currentLine = 0;
+        let found = false;
+        
+        // Buscar la línea actual basada en el tiempo
+        for (let i = 0; i < lyricsData.length; i++) {
+            const match = lyricsData[i].match(/\[(\d{2}):(\d{2})(?:\.(\d{2}))?\](.*)/);
+            if (match) {
+                const mins = parseInt(match[1]);
+                const secs = parseInt(match[2]);
+                const centisecs = parseInt(match[3] || '0');
+                const timeInSeconds = mins * 60 + secs + centisecs / 100;
+                
+                if (currentTime >= timeInSeconds) {
+                    currentLine = i;
+                    found = true;
+                }
+            }
         }
+        
+        // Mostrar contexto alrededor de la línea actual
+        const contextLines = 3;
+        const startLine = Math.max(0, currentLine - contextLines);
+        const endLine = Math.min(lyricsData.length, currentLine + contextLines + 1);
+        
+        for (let i = startLine; i < endLine; i++) {
+            // Limpiar los timestamps para mostrar solo la letra
+            const cleanLine = lyricsData[i].replace(/\[\d{2}:\d{2}(\.\d{2})?\]/g, '').trim();
+            if (cleanLine) {
+                if (i === currentLine && found) {
+                    displayText += `<span style="color: #1DB954; font-weight: bold; font-size: 18px;">▶ ${cleanLine}</span><br>`;
+                } else {
+                    displayText += `${cleanLine}<br>`;
+                }
+            }
+        }
+    } else {
+        // ===== MODO PLANO (sin sincronizar) =====
+        // Mostrar todas las letras completas
+        displayText = lyricsData.join('<br>');
     }
     
-    lyricsDisplay.innerHTML = displayText;
-    lyricsDisplay.style.display = 'block';
-    
-    // Auto-scroll a la línea actual
-    const activeLine = lyricsDisplay.querySelector('span');
-    if (activeLine) {
-        activeLine.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    if (displayText) {
+        lyricsDisplay.innerHTML = displayText;
+        lyricsDisplay.style.display = 'block';
+        
+        // Auto-scroll a la línea actual (solo en modo sincronizado)
+        if (hasSync) {
+            const activeLine = lyricsDisplay.querySelector('span');
+            if (activeLine) {
+                activeLine.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+        } else {
+            // En modo plano, scroll al inicio
+            lyricsDisplay.scrollTop = 0;
+        }
     }
 }
 
@@ -164,15 +216,14 @@ function toggleLyrics() {
     lyricsVisible = !lyricsVisible;
     lyricsDisplay.style.display = lyricsVisible ? 'block' : 'none';
     
-    if (lyricsVisible && audio.src) {
+    if (lyricsVisible && audio.src && lyricsAvailable) {
         updateLyricsDisplay();
     }
 }
 
 // ==========================================
-// MODIFICAR loadAndPlay EXISTENTE
+// MODIFICAR loadAndPlay
 // ==========================================
-// Busca la función loadAndPlay en tu código y reemplázala con esta:
 function loadAndPlay(index) {
     const song = songs[index];
     if (!song) return;
@@ -204,9 +255,8 @@ function loadAndPlay(index) {
 // ==========================================
 // ACTUALIZAR LETRAS EN CADA TICK
 // ==========================================
-// Añadir este event listener después de los existentes
 audio.addEventListener('timeupdate', () => {
-    if (lyricsVisible && lyricsData.length > 0) {
+    if (lyricsVisible && lyricsAvailable && lyricsData.length > 0) {
         updateLyricsDisplay();
     }
 });
@@ -217,5 +267,16 @@ audio.addEventListener('timeupdate', () => {
 audio.addEventListener('ended', () => {
     if (lyricsVisible) {
         lyricsDisplay.innerHTML = '🎵 Canción finalizada';
+    }
+});
+
+// ==========================================
+// AL CAMBIAR DE CANCIÓN, CERRAR LETRAS
+// ==========================================
+audio.addEventListener('emptied', () => {
+    if (lyricsVisible) {
+        lyricsVisible = false;
+        lyricsDisplay.style.display = 'none';
+        lyricsToggle.innerHTML = '📝 Letras';
     }
 });
