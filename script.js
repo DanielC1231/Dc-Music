@@ -6,95 +6,119 @@ const songs = [
     id: 1, 
     title: "Fanático del Full", 
     artist: "Darell, Baby Rasta & Nengo Flow",
+    duration: 272, // Duración en segundos (4:32)
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/01%20-%20Fan%C3%A1tico%20del%20Full%20%28feat.%20Darell%2C%20Baby%20Rasta%20%26%20%C3%91engo%20Flow%29%20%281%29.flac"
   },
   { 
     id: 2, 
     title: "Cuatro Babys", 
     artist: "Trap Capos, Noriel, Bryant Myers & Juhn",
+    duration: 278, // 4:38
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/02%20-%20Cuatro%20Babys%20%28feat.%20Trap%20Capos%2C%20Noriel%2C%20Bryant%20Myers%20%26%20Juhn%29%20%281%29.flac"
   },
   { 
     id: 3, 
     title: "Diablita", 
     artist: "Anuel AA & Baby Rasta",
+    duration: 214, // 3:34
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/03%20-%20Diablita%20%28feat.%20Anuel%20AA%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 4, 
     title: "Amigos y Enemigos", 
     artist: "Trap Latino",
+    duration: 252, // 4:12
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04%20-%20Amigos%20y%20Enemigos.flac"
   },
   { 
     id: 5, 
     title: "La Llamada", 
     artist: "Darkiel, Almighty, Brytiago & Bryant Myers",
+    duration: 369, // 6:09
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/05%20-%20La%20Llamada%20%28feat.%20Darkiel%2C%20Almighty%2C%20Brytiago%20%26%20Bryant%20Myers%29%20%281%29.flac"
   },
   { 
     id: 6, 
     title: "Quieres Enamorarme", 
     artist: "Bryant Myers, Juhn & Baby Rasta",
+    duration: 258, // 4:18
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/06%20-%20Quieres%20Enamorarme%20%28feat.%20Bryant%20Myers%2C%20Juhn%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 7, 
     title: "Me Pelea", 
     artist: "Baby Rasta, Lito Kirino, Miky Woodz, Juhn & Jochy",
+    duration: 274, // 4:34
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07%20-%20Me%20Pelea%20%28feat.%20Baby%20Rasta%2C%20Lito%20Kirino%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Jochy%29.flac"
   },
   { 
     id: 8, 
     title: "Como Glopeta", 
     artist: "Gigolo y La Exce, Miky Woodz, Juhn & Baby Angel",
+    duration: 349, // 5:49
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08%20-%20Como%20Glopeta%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Baby%20Angel%29.flac"
   },
   { 
     id: 9, 
     title: "La Paso Cabrón", 
     artist: "Gigolo y La Exce, Falsetto y Sammy, Mike Duran & Baby Angel",
+    duration: 304, // 5:04
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09%20-%20La%20Paso%20Cabr%C3%B3n%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Falsetto%20y%20Sammy%2C%20Mike%20Duran%20%26%20Baby%20Angel%29.flac"
   },
   { 
     id: 10, 
     title: "Plo Plo", 
     artist: "Baby Rasta, Juanika, Nengo Flow & Pacho",
+    duration: 278, // 4:38
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10%20-%20Plo%20Plo%20%28feat.%20Baby%20Rasta%2C%20Juanka%2C%20%C3%91engo%20Flow%20%26%20Pacho%29%20%281%29.flac"
   }
 ];
 
 // ==========================================
-// DETECCIÓN AUTOMÁTICA DE BITRATE (SIEMPRE EN kbps)
+// DETECCIÓN PRECISA DE BITRATE
 // ==========================================
 const bitrateCache = {};
 
-async function detectBitrate(url) {
-    if (bitrateCache[url]) {
-        return bitrateCache[url];
+async function detectBitrate(url, duration) {
+    const cacheKey = url + duration;
+    if (bitrateCache[cacheKey]) {
+        return bitrateCache[cacheKey];
     }
     
     try {
         const response = await fetch(url, { method: 'HEAD' });
         const contentLength = response.headers.get('content-length');
         
-        if (contentLength) {
+        if (contentLength && duration > 0) {
             const sizeInBytes = parseInt(contentLength);
-            // Calcular en kbps SIEMPRE (sin convertir a Mbps)
-            const sizeInKbps = Math.round((sizeInBytes * 8) / 1000);
+            // Fórmula correcta: (bytes * 8) / segundos / 1000 = kbps
+            const bitrate = Math.round((sizeInBytes * 8) / duration / 1000);
             
-            // Mostrar siempre en kbps
-            let bitrate = `~${sizeInKbps} kbps`;
-            
-            bitrateCache[url] = bitrate;
-            return bitrate;
+            // Validar que el bitrate sea razonable (un FLAC suele estar entre 500-1500 kbps)
+            if (bitrate > 100 && bitrate < 5000) {
+                const result = `${bitrate} kbps`;
+                bitrateCache[cacheKey] = result;
+                return result;
+            }
         }
         
+        // Si no se puede calcular, devolver "FLAC"
         return "FLAC";
     } catch (error) {
         console.log('Error detectando bitrate:', error);
         return "FLAC";
     }
+}
+
+// ==========================================
+// FUNCIÓN PARA CALCULAR DURACIÓN DESDE FORMATO mm:ss
+// ==========================================
+function parseDuration(durationStr) {
+    const parts = durationStr.split(':');
+    if (parts.length === 2) {
+        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
+    }
+    return 0;
 }
 
 // ==========================================
@@ -173,9 +197,10 @@ async function renderSongs(songsToDisplay, section = 'inicio') {
             card.classList.add('playing');
         }
         
+        // Detectar bitrate con la duración correcta
         let bitrateDisplay = 'FLAC';
         try {
-            const bitrate = await detectBitrate(song.src);
+            const bitrate = await detectBitrate(song.src, song.duration);
             bitrateDisplay = `FLAC • ${bitrate}`;
         } catch (e) {
             bitrateDisplay = 'FLAC';
@@ -256,7 +281,7 @@ async function downloadCurrentSong() {
         const available = getFilteredSongs();
         renderSongs(available, currentSection);
         
-        const bitrate = await detectBitrate(song.src);
+        const bitrate = await detectBitrate(song.src, song.duration);
         alert(`✅ "${song.title}" descargada en FLAC • ${bitrate}`);
     } catch (error) {
         console.error('Error al descargar:', error);
