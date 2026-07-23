@@ -31,6 +31,9 @@ self.addEventListener('install', (event) => {
         console.log('✅ App instalada para uso offline');
         return self.skipWaiting();
       })
+      .catch((error) => {
+        console.log('❌ Error al instalar:', error);
+      })
   );
 });
 
@@ -54,11 +57,23 @@ self.addEventListener('activate', (event) => {
 });
 
 // ==========================================
-// INTERCEPTAR PETICIONES
+// INTERCEPTAR PETICIONES (CORREGIDO)
 // ==========================================
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   const url = new URL(request.url);
+
+  // IGNORAR peticiones que no sean http/https
+  if (!url.protocol.startsWith('http')) {
+    console.log('⏭️ Ignorando petición no HTTP:', url.protocol);
+    return;
+  }
+
+  // IGNORAR peticiones HEAD (solo para detectar bitrate)
+  if (request.method === 'HEAD') {
+    console.log('⏭️ Ignorando petición HEAD');
+    return;
+  }
 
   // Si es una canción FLAC o de archive.org
   if (url.pathname.endsWith('.flac') || url.hostname.includes('archive.org')) {
