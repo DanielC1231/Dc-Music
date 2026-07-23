@@ -128,7 +128,7 @@ const songs = [
 ];
 
 // ==========================================
-// DETECCIÓN PRECISA DE BITRATE
+// DETECCIÓN PRECISA DE BITRATE (CORREGIDO)
 // ==========================================
 const bitrateCache = {};
 
@@ -155,7 +155,7 @@ async function detectBitrate(url, duration) {
         
         return "FLAC";
     } catch (error) {
-        console.log('Error detectando bitrate:', error);
+        // No mostrar error en consola para no saturar
         return "FLAC";
     }
 }
@@ -310,7 +310,7 @@ async function downloadCurrentSong() {
                 await cache.put(`lyrics/${cleanTitle}.txt`, new Response(lyricBlob));
             }
         } catch (lyricError) {
-            console.log('No se encontraron letras para esta canción');
+            // No hay letras, ignorar
         }
         
         downloadedSongs.push(song.id);
@@ -459,7 +459,7 @@ progress.addEventListener('input', () => {
 });
 
 // ==========================================
-// SISTEMA DE LETRAS AUTOMÁTICO
+// SISTEMA DE LETRAS AUTOMÁTICO (CORREGIDO)
 // ==========================================
 let lyricsData = [];
 let currentLyricIndex = -1;
@@ -536,7 +536,7 @@ lyricsToggle.onclick = toggleLyrics;
 document.querySelector('.controls').appendChild(lyricsToggle);
 
 // ==========================================
-// CARGAR LETRAS DESDE ARCHIVO .TXT
+// CARGAR LETRAS DESDE ARCHIVO .TXT (CORREGIDO)
 // ==========================================
 async function loadLyrics(songId) {
     try {
@@ -555,7 +555,6 @@ async function loadLyrics(songId) {
             lyricsAvailable = false;
             lyricsToggle.style.display = 'none';
             lyricsData = [];
-            console.log('📝 No hay letras para:', song.title);
             return;
         }
         
@@ -574,7 +573,6 @@ async function loadLyrics(songId) {
         lyricsToggle.style.display = 'inline-block';
         
     } catch (error) {
-        console.log('Error al cargar letras:', error);
         lyricsAvailable = false;
         lyricsToggle.style.display = 'none';
         lyricsData = [];
