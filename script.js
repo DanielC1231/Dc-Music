@@ -67,25 +67,12 @@ const songs = [
 // ==========================================
 // DETECCIÓN DE CALIDAD DE AUDIO
 // ==========================================
-const audioInfoCache = {};
-
 function detectAudioQuality(url) {
-    // Si ya está en caché, devolverlo
-    if (audioInfoCache[url]) {
-        return audioInfoCache[url];
-    }
-    
-    // Valores por defecto para FLAC
-    let info = {
+    return {
         bitDepth: "24-bit",
         sampleRate: "44.1kHz",
         format: "FLAC"
     };
-    
-    // Estimar calidad basada en la URL o usar valores por defecto
-    // Como no podemos hacer fetch de forma síncrona, usamos valores estándar
-    audioInfoCache[url] = info;
-    return info;
 }
 
 // ==========================================
@@ -142,19 +129,20 @@ function renderSongs(songsToDisplay, section = 'inicio') {
     songList.innerHTML = "";
     
     if (songsToDisplay.length === 0) {
-        songList.innerHTML = `<p style="color: #b3b3b3; text-align: center; padding: 40px; font-size: 16px;">
-            ${section === 'descargas' ? '📭 No tienes canciones descargadas aún' : '🎵 No hay canciones disponibles'}
-        </p>`;
+        songList.innerHTML = '<p style="color: #b3b3b3; text-align: center; padding: 40px; font-size: 16px;">' +
+            (section === 'descargas' ? '📭 No tienes canciones descargadas aún' : '🎵 No hay canciones disponibles') +
+            '</p>';
         songCounter.textContent = '0 canciones';
         return;
     }
 
-    songCounter.textContent = `${songsToDisplay.length} canciones`;
+    songCounter.textContent = songsToDisplay.length + ' canciones';
 
-    songsToDisplay.forEach((song, index) => {
+    for (let i = 0; i < songsToDisplay.length; i++) {
+        const song = songsToDisplay[i];
         const card = document.createElement('div');
         card.classList.add('card');
-        card.dataset.index = index;
+        card.dataset.index = i;
         
         if (isSongDownloaded(song.id)) {
             card.classList.add('descargada');
@@ -164,9 +152,8 @@ function renderSongs(songsToDisplay, section = 'inicio') {
             card.classList.add('playing');
         }
         
-        // Obtener calidad de audio
         const quality = detectAudioQuality(song.src);
-        const qualityDisplay = `${quality.bitDepth} • ${quality.sampleRate} • ${quality.format}`;
+        const qualityDisplay = quality.bitDepth + ' • ' + quality.sampleRate + ' • ' + quality.format;
         
         card.innerHTML = `
             <h4>${song.title}</h4>
@@ -176,15 +163,17 @@ function renderSongs(songsToDisplay, section = 'inicio') {
             </span>
         `;
         
-        card.onclick = () => {
-            const realIndex = songs.findIndex(s => s.id === song.id);
-            if (realIndex !== -1) {
-                loadAndPlay(realIndex);
-            }
-        };
+        card.onclick = (function(songId) {
+            return function() {
+                const realIndex = songs.findIndex(function(s) { return s.id === songId; });
+                if (realIndex !== -1) {
+                    loadAndPlay(realIndex);
+                }
+            };
+        })(song.id);
         
         songList.appendChild(card);
-    });
+    }
 }
 
 // ==========================================
@@ -199,18 +188,18 @@ async function downloadCurrentSong() {
     const song = songs[currentIndex];
     
     if (isSongDownloaded(song.id)) {
-        if (confirm(`¿Quieres eliminar "${song.title}" de tus descargas?`)) {
+        if (confirm('¿Quieres eliminar "' + song.title + '" de tus descargas?')) {
             try {
                 const cache = await caches.open(CACHE_NAME);
                 await cache.delete(song.src);
                 const cleanTitle = song.title.replace(/[^a-zA-Z0-9 ]/g, '').trim();
-                await cache.delete(`lyrics/${cleanTitle}.txt`);
-                downloadedSongs = downloadedSongs.filter(id => id !== song.id);
+                await cache.delete('lyrics/' + cleanTitle + '.txt');
+                downloadedSongs = downloadedSongs.filter(function(id) { return id !== song.id; });
                 saveDownloadedSongs();
                 
                 const available = getFilteredSongs();
                 renderSongs(available, currentSection);
-                alert(`"${song.title}" eliminada de descargas.`);
+                alert('"' + song.title + '" eliminada de descargas.');
             } catch (error) {
                 console.error('Error al eliminar:', error);
                 alert('Error al eliminar la canción del caché.');
@@ -228,10 +217,10 @@ async function downloadCurrentSong() {
         
         try {
             const cleanTitle = song.title.replace(/[^a-zA-Z0-9 ]/g, '').trim();
-            const lyricResponse = await fetch(`lyrics/${cleanTitle}.txt`);
+            const lyricResponse = await fetch('lyrics/' + cleanTitle + '.txt');
             if (lyricResponse.ok) {
                 const lyricBlob = await lyricResponse.blob();
-                await cache.put(`lyrics/${cleanTitle}.txt`, new Response(lyricBlob));
+                await cache.put('lyrics/' + cleanTitle + '.txt', new Response(lyricBlob));
             }
         } catch (lyricError) {
             console.log('No se encontraron letras para esta canción');
@@ -244,7 +233,7 @@ async function downloadCurrentSong() {
         renderSongs(available, currentSection);
         
         const quality = detectAudioQuality(song.src);
-        alert(`✅ "${song.title}" descargada en ${quality.bitDepth} • ${quality.sampleRate} • ${quality.format}`);
+        alert('✅ "' + song.title + '" descargada en ' + quality.bitDepth + ' • ' + quality.sampleRate + ' • ' + quality.format);
     } catch (error) {
         console.error('Error al descargar:', error);
         alert('❌ Error al descargar la canción. Inténtalo de nuevo.');
@@ -253,7 +242,7 @@ async function downloadCurrentSong() {
 
 function getFilteredSongs() {
     if (currentSection === 'descargas') {
-        return songs.filter(song => downloadedSongs.includes(song.id));
+        return songs.filter(function(song) { return downloadedSongs.includes(song.id); });
     }
     return songs;
 }
@@ -265,7 +254,7 @@ function changeSection(section) {
     currentSection = section;
     const title = document.getElementById('sectionTitle');
     
-    document.querySelectorAll('.menu li').forEach(li => li.classList.remove('active'));
+    document.querySelectorAll('.menu li').forEach(function(li) { li.classList.remove('active'); });
     
     if (section === 'inicio') {
         document.getElementById('menu-inicio').classList.add('active');
@@ -291,7 +280,6 @@ function loadAndPlay(index) {
     audio.currentTime = 0;
     currentTimeDisplay.textContent = '0:00';
     
-    // Cargar letras automáticamente
     loadLyrics(song.id);
     
     audio.src = song.src;
@@ -302,9 +290,9 @@ function loadAndPlay(index) {
     renderSongs(available, currentSection);
     
     audio.load();
-    audio.play().then(() => {
+    audio.play().then(function() {
         playBtn.innerText = "⏸";
-    }).catch(e => {
+    }).catch(function(e) {
         console.log("Esperando interacción del usuario");
         playBtn.innerText = "▶";
     });
@@ -315,7 +303,7 @@ function playSong() {
         const available = getFilteredSongs();
         if (available.length > 0) {
             const firstSong = available[0];
-            const realIndex = songs.findIndex(s => s.id === firstSong.id);
+            const realIndex = songs.findIndex(function(s) { return s.id === firstSong.id; });
             loadAndPlay(realIndex);
         }
         return;
@@ -335,9 +323,15 @@ function nextSong() {
     if (available.length === 0) return;
     
     const currentId = songs[currentIndex].id;
-    const currentFilteredIndex = available.findIndex(s => s.id === currentId);
+    let currentFilteredIndex = -1;
+    for (let i = 0; i < available.length; i++) {
+        if (available[i].id === currentId) {
+            currentFilteredIndex = i;
+            break;
+        }
+    }
     const nextFilteredIndex = (currentFilteredIndex + 1) % available.length;
-    const realIndex = songs.findIndex(s => s.id === available[nextFilteredIndex].id);
+    const realIndex = songs.findIndex(function(s) { return s.id === available[nextFilteredIndex].id; });
     loadAndPlay(realIndex);
 }
 
@@ -346,9 +340,15 @@ function prevSong() {
     if (available.length === 0) return;
     
     const currentId = songs[currentIndex].id;
-    const currentFilteredIndex = available.findIndex(s => s.id === currentId);
+    let currentFilteredIndex = -1;
+    for (let i = 0; i < available.length; i++) {
+        if (available[i].id === currentId) {
+            currentFilteredIndex = i;
+            break;
+        }
+    }
     const prevFilteredIndex = (currentFilteredIndex - 1 + available.length) % available.length;
-    const realIndex = songs.findIndex(s => s.id === available[prevFilteredIndex].id);
+    const realIndex = songs.findIndex(function(s) { return s.id === available[prevFilteredIndex].id; });
     loadAndPlay(realIndex);
 }
 
@@ -359,253 +359,96 @@ function formatTime(seconds) {
     if (isNaN(seconds)) return '0:00';
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
 }
 
-audio.addEventListener('timeupdate', () => {
+audio.addEventListener('timeupdate', function() {
     if (audio.duration) {
-        const percent = (audio.currentTime / audio.duration) * 100;
+        var percent = (audio.currentTime / audio.duration) * 100;
         progress.value = percent;
         currentTimeDisplay.textContent = formatTime(audio.currentTime);
         totalTimeDisplay.textContent = formatTime(audio.duration);
     }
 });
 
-audio.addEventListener('loadedmetadata', () => {
+audio.addEventListener('loadedmetadata', function() {
     progress.value = 0;
     currentTimeDisplay.textContent = '0:00';
     totalTimeDisplay.textContent = formatTime(audio.duration);
 });
 
-progress.addEventListener('input', () => {
+progress.addEventListener('input', function() {
     if (audio.duration) {
         audio.currentTime = (progress.value / 100) * audio.duration;
     }
 });
 
 // ==========================================
-// SISTEMA DE LETRAS AUTOMÁTICO
+// SISTEMA DE LETRAS
 // ==========================================
 let lyricsData = [];
-let currentLyricIndex = -1;
 let lyricsVisible = false;
 let lyricsAvailable = false;
 
-// Crear contenedor de letras
 const lyricsDisplay = document.createElement('div');
 lyricsDisplay.id = 'lyricsDisplay';
-lyricsDisplay.style.cssText = `
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.92);
-    color: #fff;
-    padding: 20px 30px;
-    border-radius: 12px;
-    max-width: 600px;
-    width: 90%;
-    text-align: center;
-    font-size: 16px;
-    z-index: 99;
-    border: 1px solid #1DB954;
-    display: none;
-    max-height: 250px;
-    overflow-y: auto;
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-    line-height: 1.6;
-    font-family: 'Segoe UI', sans-serif;
-    scroll-behavior: smooth;
-`;
-
-// Estilo para el scroll de las letras
-const lyricsStyle = document.createElement('style');
-lyricsStyle.textContent = `
-    #lyricsDisplay::-webkit-scrollbar {
-        width: 4px;
-    }
-    #lyricsDisplay::-webkit-scrollbar-track {
-        background: transparent;
-    }
-    #lyricsDisplay::-webkit-scrollbar-thumb {
-        background: #1DB954;
-        border-radius: 4px;
-    }
-`;
-document.head.appendChild(lyricsStyle);
+lyricsDisplay.style.cssText = 'position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.92); color: #fff; padding: 20px 30px; border-radius: 12px; max-width: 600px; width: 90%; text-align: center; font-size: 16px; z-index: 99; border: 1px solid #1DB954; display: none; max-height: 250px; overflow-y: auto; backdrop-filter: blur(10px); transition: all 0.3s ease; line-height: 1.6; font-family: Segoe UI, sans-serif; scroll-behavior: smooth;';
 document.body.appendChild(lyricsDisplay);
 
-// Botón de letras (oculto por defecto)
 const lyricsToggle = document.createElement('button');
 lyricsToggle.id = 'lyricsToggle';
 lyricsToggle.innerHTML = '📝 Letras';
-lyricsToggle.style.cssText = `
-    background: none;
-    border: none;
-    color: #1DB954;
-    font-size: 15px;
-    cursor: pointer;
-    padding: 5px 12px;
-    border-radius: 20px;
-    transition: all 0.3s;
-    margin-left: 10px;
-    display: none;
-`;
-
-lyricsToggle.onmouseover = () => {
-    lyricsToggle.style.background = 'rgba(29, 185, 84, 0.2)';
-};
-lyricsToggle.onmouseout = () => {
-    lyricsToggle.style.background = 'none';
-};
+lyricsToggle.style.cssText = 'background: none; border: none; color: #1DB954; font-size: 15px; cursor: pointer; padding: 5px 12px; border-radius: 20px; transition: all 0.3s; margin-left: 10px; display: none;';
 lyricsToggle.onclick = toggleLyrics;
-
-// Insertar botón en los controles
 document.querySelector('.controls').appendChild(lyricsToggle);
 
-// ==========================================
-// CARGAR LETRAS DESDE ARCHIVO .TXT
-// ==========================================
 async function loadLyrics(songId) {
     try {
-        const song = songs.find(s => s.id === songId);
+        const song = songs.find(function(s) { return s.id === songId; });
         if (!song) return;
         
         const cleanTitle = song.title.replace(/[^a-zA-Z0-9 ]/g, '').trim();
-        
-        let response = await fetch(`lyrics/${cleanTitle}.txt`);
+        let response = await fetch('lyrics/' + cleanTitle + '.txt');
         
         if (!response.ok) {
-            response = await fetch(`lyrics/${song.title}.txt`);
+            response = await fetch('lyrics/' + song.title + '.txt');
         }
         
         if (!response.ok) {
             lyricsAvailable = false;
             lyricsToggle.style.display = 'none';
             lyricsData = [];
-            console.log('📝 No hay letras para:', song.title);
             return;
         }
         
         const text = await response.text();
-        lyricsData = text.split('\n').filter(line => line.trim() !== '');
-        
-        const hasSync = lyricsData.some(line => /\[\d{2}:\d{2}(\.\d{2})?\]/.test(line));
-        
-        if (hasSync) {
-            console.log('✅ Letras SINCRONIZADAS:', lyricsData.length, 'líneas');
-        } else {
-            console.log('📝 Letras PLANAS:', lyricsData.length, 'líneas');
-        }
-        
+        lyricsData = text.split('\n').filter(function(line) { return line.trim() !== ''; });
         lyricsAvailable = true;
         lyricsToggle.style.display = 'inline-block';
-        
     } catch (error) {
-        console.log('Error al cargar letras:', error);
         lyricsAvailable = false;
         lyricsToggle.style.display = 'none';
         lyricsData = [];
     }
 }
 
-// ==========================================
-// MOSTRAR LETRAS
-// ==========================================
 function updateLyricsDisplay() {
-    if (!lyricsVisible || lyricsData.length === 0) {
-        return;
-    }
-    
-    const hasSync = lyricsData.some(line => /\[\d{2}:\d{2}(\.\d{2})?\]/.test(line));
-    let displayText = '';
-    
-    if (hasSync) {
-        const currentTime = audio.currentTime;
-        let currentLine = 0;
-        let found = false;
-        
-        for (let i = 0; i < lyricsData.length; i++) {
-            const match = lyricsData[i].match(/\[(\d{2}):(\d{2})(?:\.(\d{2}))?\](.*)/);
-            if (match) {
-                const mins = parseInt(match[1]);
-                const secs = parseInt(match[2]);
-                const centisecs = parseInt(match[3] || '0');
-                const timeInSeconds = mins * 60 + secs + centisecs / 100;
-                
-                if (currentTime >= timeInSeconds) {
-                    currentLine = i;
-                    found = true;
-                }
-            }
-        }
-        
-        const contextLines = 3;
-        const startLine = Math.max(0, currentLine - contextLines);
-        const endLine = Math.min(lyricsData.length, currentLine + contextLines + 1);
-        
-        for (let i = startLine; i < endLine; i++) {
-            const cleanLine = lyricsData[i].replace(/\[\d{2}:\d{2}(\.\d{2})?\]/g, '').trim();
-            if (cleanLine) {
-                if (i === currentLine && found) {
-                    displayText += `<span style="color: #1DB954; font-weight: bold; font-size: 18px;">▶ ${cleanLine}</span><br>`;
-                } else {
-                    displayText += `${cleanLine}<br>`;
-                }
-            }
-        }
-    } else {
-        displayText = lyricsData.join('<br>');
-    }
-    
-    if (displayText) {
-        lyricsDisplay.innerHTML = displayText;
-        lyricsDisplay.style.display = 'block';
-        
-        if (hasSync) {
-            const activeLine = lyricsDisplay.querySelector('span');
-            if (activeLine) {
-                activeLine.scrollIntoView({ block: 'center', behavior: 'smooth' });
-            }
-        } else {
-            lyricsDisplay.scrollTop = 0;
-        }
-    }
+    if (!lyricsVisible || lyricsData.length === 0) return;
+    lyricsDisplay.innerHTML = lyricsData.join('<br>');
+    lyricsDisplay.style.display = 'block';
 }
 
-// ==========================================
-// FUNCIONES DE CONTROL DE LETRAS
-// ==========================================
 function toggleLyrics() {
     lyricsVisible = !lyricsVisible;
     lyricsDisplay.style.display = lyricsVisible ? 'block' : 'none';
-    
     if (lyricsVisible && audio.src && lyricsAvailable) {
         updateLyricsDisplay();
     }
 }
 
-// ==========================================
-// EVENTOS DE AUDIO PARA LETRAS
-// ==========================================
-audio.addEventListener('timeupdate', () => {
+audio.addEventListener('timeupdate', function() {
     if (lyricsVisible && lyricsAvailable && lyricsData.length > 0) {
         updateLyricsDisplay();
-    }
-});
-
-audio.addEventListener('ended', () => {
-    if (lyricsVisible) {
-        lyricsDisplay.innerHTML = '🎵 Canción finalizada';
-    }
-});
-
-audio.addEventListener('emptied', () => {
-    if (lyricsVisible) {
-        lyricsVisible = false;
-        lyricsDisplay.style.display = 'none';
-        lyricsToggle.innerHTML = '📝 Letras';
     }
 });
 
@@ -618,11 +461,10 @@ document.getElementById('sectionTitle').innerText = getGreeting();
 
 if (songs.length > 0) {
     renderSongs(songs, 'inicio');
-    songCounter.textContent = `${songs.length} canciones`;
+    songCounter.textContent = songs.length + ' canciones';
 } else {
-    songList.innerHTML = "<p>No hay canciones configuradas.</p>";
+    songList.innerHTML = '<p>No hay canciones configuradas.</p>';
     songCounter.textContent = '0 canciones';
 }
 
-console.log(`🎵 DC Music cargado - ${songs.length} canciones en FLAC`);
-console.log(`📥 ${downloadedSongs.length} canciones descargadas`);
+console.log('🎵 DC Music cargado - ' + songs.length + ' canciones en FLAC');
