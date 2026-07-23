@@ -570,4 +570,130 @@ async function loadLyrics(songId) {
             console.log('📝 Letras PLANAS:', lyricsData.length, 'líneas');
         }
         
-        lyrics
+        lyricsAvailable = true;
+        lyricsToggle.style.display = 'inline-block';
+        
+    } catch (error) {
+        console.log('Error al cargar letras:', error);
+        lyricsAvailable = false;
+        lyricsToggle.style.display = 'none';
+        lyricsData = [];
+    }
+}
+
+// ==========================================
+// MOSTRAR LETRAS
+// ==========================================
+function updateLyricsDisplay() {
+    if (!lyricsVisible || lyricsData.length === 0) {
+        return;
+    }
+    
+    const hasSync = lyricsData.some(line => /\[\d{2}:\d{2}(\.\d{2})?\]/.test(line));
+    let displayText = '';
+    
+    if (hasSync) {
+        const currentTime = audio.currentTime;
+        let currentLine = 0;
+        let found = false;
+        
+        for (let i = 0; i < lyricsData.length; i++) {
+            const match = lyricsData[i].match(/\[(\d{2}):(\d{2})(?:\.(\d{2}))?\](.*)/);
+            if (match) {
+                const mins = parseInt(match[1]);
+                const secs = parseInt(match[2]);
+                const centisecs = parseInt(match[3] || '0');
+                const timeInSeconds = mins * 60 + secs + centisecs / 100;
+                
+                if (currentTime >= timeInSeconds) {
+                    currentLine = i;
+                    found = true;
+                }
+            }
+        }
+        
+        const contextLines = 3;
+        const startLine = Math.max(0, currentLine - contextLines);
+        const endLine = Math.min(lyricsData.length, currentLine + contextLines + 1);
+        
+        for (let i = startLine; i < endLine; i++) {
+            const cleanLine = lyricsData[i].replace(/\[\d{2}:\d{2}(\.\d{2})?\]/g, '').trim();
+            if (cleanLine) {
+                if (i === currentLine && found) {
+                    displayText += `<span style="color: #1DB954; font-weight: bold; font-size: 18px;">▶ ${cleanLine}</span><br>`;
+                } else {
+                    displayText += `${cleanLine}<br>`;
+                }
+            }
+        }
+    } else {
+        displayText = lyricsData.join('<br>');
+    }
+    
+    if (displayText) {
+        lyricsDisplay.innerHTML = displayText;
+        lyricsDisplay.style.display = 'block';
+        
+        if (hasSync) {
+            const activeLine = lyricsDisplay.querySelector('span');
+            if (activeLine) {
+                activeLine.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            }
+        } else {
+            lyricsDisplay.scrollTop = 0;
+        }
+    }
+}
+
+// ==========================================
+// FUNCIONES DE CONTROL DE LETRAS
+// ==========================================
+function toggleLyrics() {
+    lyricsVisible = !lyricsVisible;
+    lyricsDisplay.style.display = lyricsVisible ? 'block' : 'none';
+    
+    if (lyricsVisible && audio.src && lyricsAvailable) {
+        updateLyricsDisplay();
+    }
+}
+
+// ==========================================
+// EVENTOS DE AUDIO PARA LETRAS
+// ==========================================
+audio.addEventListener('timeupdate', () => {
+    if (lyricsVisible && lyricsAvailable && lyricsData.length > 0) {
+        updateLyricsDisplay();
+    }
+});
+
+audio.addEventListener('ended', () => {
+    if (lyricsVisible) {
+        lyricsDisplay.innerHTML = '🎵 Canción finalizada';
+    }
+});
+
+audio.addEventListener('emptied', () => {
+    if (lyricsVisible) {
+        lyricsVisible = false;
+        lyricsDisplay.style.display = 'none';
+        lyricsToggle.innerHTML = '📝 Letras';
+    }
+});
+
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
+loadDownloadedSongs();
+
+document.getElementById('sectionTitle').innerText = getGreeting();
+
+if (songs.length > 0) {
+    renderSongs(songs, 'inicio');
+    songCounter.textContent = `${songs.length} canciones`;
+} else {
+    songList.innerHTML = "<p>No hay canciones configuradas.</p>";
+    songCounter.textContent = '0 canciones';
+}
+
+console.log(`🎵 DC Music cargado - ${songs.length} canciones en FLAC`);
+console.log(`📥 ${downloadedSongs.length} canciones descargadas`);
