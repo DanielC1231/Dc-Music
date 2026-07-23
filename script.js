@@ -3,11 +3,9 @@
 // ==========================================
 let isOnline = navigator.onLine;
 
-// Actualizar estado cuando cambie
 window.addEventListener('online', () => {
     isOnline = true;
     console.log('🌐 Conexión restablecida');
-    // Mostrar notificación
     showNotification('🌐 Conexión restablecida', '#1DB954');
 });
 
@@ -45,7 +43,6 @@ function showNotification(message, color = '#1DB954') {
     }, 3000);
 }
 
-// Mostrar estado inicial
 if (!isOnline) {
     setTimeout(() => {
         showNotification('📡 Sin conexión - Modo offline', '#ff6b6b');
@@ -62,70 +59,70 @@ const songs = [
     id: 1, 
     title: "Fanático del Full", 
     artist: "Darell, Baby Rasta & Nengo Flow",
-    duration: 272, // Duración en segundos (4:32)
+    duration: 272,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/01%20-%20Fan%C3%A1tico%20del%20Full%20%28feat.%20Darell%2C%20Baby%20Rasta%20%26%20%C3%91engo%20Flow%29%20%281%29.flac"
   },
   { 
     id: 2, 
     title: "Cuatro Babys", 
     artist: "Trap Capos, Noriel, Bryant Myers & Juhn",
-    duration: 278, // 4:38
+    duration: 278,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/02%20-%20Cuatro%20Babys%20%28feat.%20Trap%20Capos%2C%20Noriel%2C%20Bryant%20Myers%20%26%20Juhn%29%20%281%29.flac"
   },
   { 
     id: 3, 
     title: "Diablita", 
     artist: "Anuel AA & Baby Rasta",
-    duration: 214, // 3:34
+    duration: 214,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/03%20-%20Diablita%20%28feat.%20Anuel%20AA%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 4, 
     title: "Amigos y Enemigos", 
     artist: "Trap Latino",
-    duration: 252, // 4:12
+    duration: 252,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04%20-%20Amigos%20y%20Enemigos.flac"
   },
   { 
     id: 5, 
     title: "La Llamada", 
     artist: "Darkiel, Almighty, Brytiago & Bryant Myers",
-    duration: 369, // 6:09
+    duration: 369,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/05%20-%20La%20Llamada%20%28feat.%20Darkiel%2C%20Almighty%2C%20Brytiago%20%26%20Bryant%20Myers%29%20%281%29.flac"
   },
   { 
     id: 6, 
     title: "Quieres Enamorarme", 
     artist: "Bryant Myers, Juhn & Baby Rasta",
-    duration: 258, // 4:18
+    duration: 258,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/06%20-%20Quieres%20Enamorarme%20%28feat.%20Bryant%20Myers%2C%20Juhn%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 7, 
     title: "Me Pelea", 
     artist: "Baby Rasta, Lito Kirino, Miky Woodz, Juhn & Jochy",
-    duration: 274, // 4:34
+    duration: 274,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07%20-%20Me%20Pelea%20%28feat.%20Baby%20Rasta%2C%20Lito%20Kirino%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Jochy%29.flac"
   },
   { 
     id: 8, 
     title: "Como Glopeta", 
     artist: "Gigolo y La Exce, Miky Woodz, Juhn & Baby Angel",
-    duration: 349, // 5:49
+    duration: 349,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08%20-%20Como%20Glopeta%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Baby%20Angel%29.flac"
   },
   { 
     id: 9, 
     title: "La Paso Cabrón", 
     artist: "Gigolo y La Exce, Falsetto y Sammy, Mike Duran & Baby Angel",
-    duration: 304, // 5:04
+    duration: 304,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09%20-%20La%20Paso%20Cabr%C3%B3n%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Falsetto%20y%20Sammy%2C%20Mike%20Duran%20%26%20Baby%20Angel%29.flac"
   },
   { 
     id: 10, 
     title: "Plo Plo", 
     artist: "Baby Rasta, Juanika, Nengo Flow & Pacho",
-    duration: 278, // 4:38
+    duration: 278,
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10%20-%20Plo%20Plo%20%28feat.%20Baby%20Rasta%2C%20Juanka%2C%20%C3%91engo%20Flow%20%26%20Pacho%29%20%281%29.flac"
   }
 ];
@@ -147,10 +144,8 @@ async function detectBitrate(url, duration) {
         
         if (contentLength && duration > 0) {
             const sizeInBytes = parseInt(contentLength);
-            // Fórmula correcta: (bytes * 8) / segundos / 1000 = kbps
             const bitrate = Math.round((sizeInBytes * 8) / duration / 1000);
             
-            // Validar que el bitrate sea razonable (un FLAC suele estar entre 500-1500 kbps)
             if (bitrate > 100 && bitrate < 5000) {
                 const result = `${bitrate} kbps`;
                 bitrateCache[cacheKey] = result;
@@ -158,23 +153,11 @@ async function detectBitrate(url, duration) {
             }
         }
         
-        // Si no se puede calcular, devolver "FLAC"
         return "FLAC";
     } catch (error) {
         console.log('Error detectando bitrate:', error);
         return "FLAC";
     }
-}
-
-// ==========================================
-// FUNCIÓN PARA CALCULAR DURACIÓN DESDE FORMATO mm:ss
-// ==========================================
-function parseDuration(durationStr) {
-    const parts = durationStr.split(':');
-    if (parts.length === 2) {
-        return parseInt(parts[0]) * 60 + parseInt(parts[1]);
-    }
-    return 0;
 }
 
 // ==========================================
@@ -253,7 +236,6 @@ async function renderSongs(songsToDisplay, section = 'inicio') {
             card.classList.add('playing');
         }
         
-        // Detectar bitrate con la duración correcta
         let bitrateDisplay = 'FLAC';
         try {
             const bitrate = await detectBitrate(song.src, song.duration);
@@ -588,130 +570,4 @@ async function loadLyrics(songId) {
             console.log('📝 Letras PLANAS:', lyricsData.length, 'líneas');
         }
         
-        lyricsAvailable = true;
-        lyricsToggle.style.display = 'inline-block';
-        
-    } catch (error) {
-        console.log('Error al cargar letras:', error);
-        lyricsAvailable = false;
-        lyricsToggle.style.display = 'none';
-        lyricsData = [];
-    }
-}
-
-// ==========================================
-// MOSTRAR LETRAS
-// ==========================================
-function updateLyricsDisplay() {
-    if (!lyricsVisible || lyricsData.length === 0) {
-        return;
-    }
-    
-    const hasSync = lyricsData.some(line => /\[\d{2}:\d{2}(\.\d{2})?\]/.test(line));
-    let displayText = '';
-    
-    if (hasSync) {
-        const currentTime = audio.currentTime;
-        let currentLine = 0;
-        let found = false;
-        
-        for (let i = 0; i < lyricsData.length; i++) {
-            const match = lyricsData[i].match(/\[(\d{2}):(\d{2})(?:\.(\d{2}))?\](.*)/);
-            if (match) {
-                const mins = parseInt(match[1]);
-                const secs = parseInt(match[2]);
-                const centisecs = parseInt(match[3] || '0');
-                const timeInSeconds = mins * 60 + secs + centisecs / 100;
-                
-                if (currentTime >= timeInSeconds) {
-                    currentLine = i;
-                    found = true;
-                }
-            }
-        }
-        
-        const contextLines = 3;
-        const startLine = Math.max(0, currentLine - contextLines);
-        const endLine = Math.min(lyricsData.length, currentLine + contextLines + 1);
-        
-        for (let i = startLine; i < endLine; i++) {
-            const cleanLine = lyricsData[i].replace(/\[\d{2}:\d{2}(\.\d{2})?\]/g, '').trim();
-            if (cleanLine) {
-                if (i === currentLine && found) {
-                    displayText += `<span style="color: #1DB954; font-weight: bold; font-size: 18px;">▶ ${cleanLine}</span><br>`;
-                } else {
-                    displayText += `${cleanLine}<br>`;
-                }
-            }
-        }
-    } else {
-        displayText = lyricsData.join('<br>');
-    }
-    
-    if (displayText) {
-        lyricsDisplay.innerHTML = displayText;
-        lyricsDisplay.style.display = 'block';
-        
-        if (hasSync) {
-            const activeLine = lyricsDisplay.querySelector('span');
-            if (activeLine) {
-                activeLine.scrollIntoView({ block: 'center', behavior: 'smooth' });
-            }
-        } else {
-            lyricsDisplay.scrollTop = 0;
-        }
-    }
-}
-
-// ==========================================
-// FUNCIONES DE CONTROL DE LETRAS
-// ==========================================
-function toggleLyrics() {
-    lyricsVisible = !lyricsVisible;
-    lyricsDisplay.style.display = lyricsVisible ? 'block' : 'none';
-    
-    if (lyricsVisible && audio.src && lyricsAvailable) {
-        updateLyricsDisplay();
-    }
-}
-
-// ==========================================
-// EVENTOS DE AUDIO PARA LETRAS
-// ==========================================
-audio.addEventListener('timeupdate', () => {
-    if (lyricsVisible && lyricsAvailable && lyricsData.length > 0) {
-        updateLyricsDisplay();
-    }
-});
-
-audio.addEventListener('ended', () => {
-    if (lyricsVisible) {
-        lyricsDisplay.innerHTML = '🎵 Canción finalizada';
-    }
-});
-
-audio.addEventListener('emptied', () => {
-    if (lyricsVisible) {
-        lyricsVisible = false;
-        lyricsDisplay.style.display = 'none';
-        lyricsToggle.innerHTML = '📝 Letras';
-    }
-});
-
-// ==========================================
-// INICIALIZACIÓN
-// ==========================================
-loadDownloadedSongs();
-
-document.getElementById('sectionTitle').innerText = getGreeting();
-
-if (songs.length > 0) {
-    renderSongs(songs, 'inicio');
-    songCounter.textContent = `${songs.length} canciones`;
-} else {
-    songList.innerHTML = "<p>No hay canciones configuradas.</p>";
-    songCounter.textContent = '0 canciones';
-}
-
-console.log(`🎵 DC Music cargado - ${songs.length} canciones en FLAC`);
-console.log(`📥 ${downloadedSongs.length} canciones descargadas`);
+        lyrics
