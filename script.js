@@ -7,12 +7,14 @@ window.addEventListener('online', () => {
     isOnline = true;
     console.log('🌐 Conexión restablecida');
     showNotification('🌐 Conexión restablecida', '#1DB954');
+    updateConnectionStatus();
 });
 
 window.addEventListener('offline', () => {
     isOnline = false;
     console.log('📡 Sin conexión - Modo offline');
     showNotification('📡 Sin conexión - Modo offline', '#ff6b6b');
+    updateConnectionStatus();
 });
 
 function showNotification(message, color = '#1DB954') {
@@ -43,12 +45,38 @@ function showNotification(message, color = '#1DB954') {
     }, 3000);
 }
 
-if (!isOnline) {
-    setTimeout(() => {
-        showNotification('📡 Sin conexión - Modo offline', '#ff6b6b');
-    }, 1000);
-} else {
-    console.log('🌐 Conectado a internet');
+// ==========================================
+// INDICADOR DE CONEXIÓN OFFLINE (SOLO EN APP)
+// ==========================================
+function updateConnectionStatus() {
+    let status = document.getElementById('connectionStatus');
+    if (!status) {
+        status = document.createElement('div');
+        status.id = 'connectionStatus';
+        status.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 999;
+            background: ${navigator.onLine ? '#1DB954' : '#ff6b6b'};
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        `;
+        status.textContent = navigator.onLine ? '🟢 Online' : '🔴 Offline';
+        
+        // Solo mostrar en modo app (instalada)
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            document.body.appendChild(status);
+        }
+    } else {
+        status.textContent = navigator.onLine ? '🟢 Online' : '🔴 Offline';
+        status.style.background = navigator.onLine ? '#1DB954' : '#ff6b6b';
+    }
 }
 
 // ==========================================
@@ -128,7 +156,7 @@ const songs = [
 ];
 
 // ==========================================
-// DETECCIÓN PRECISA DE BITRATE (CORREGIDO)
+// DETECCIÓN PRECISA DE BITRATE
 // ==========================================
 const bitrateCache = {};
 
@@ -155,7 +183,6 @@ async function detectBitrate(url, duration) {
         
         return "FLAC";
     } catch (error) {
-        // No mostrar error en consola para no saturar
         return "FLAC";
     }
 }
@@ -264,6 +291,19 @@ async function renderSongs(songsToDisplay, section = 'inicio') {
 }
 
 // ==========================================
+// VERIFICAR CANCIÓN EN CACHÉ
+// ==========================================
+async function isSongCached(url) {
+    try {
+        const cache = await caches.open(CACHE_NAME);
+        const response = await cache.match(url);
+        return !!response;
+    } catch (e) {
+        return false;
+    }
+}
+
+// ==========================================
 // DESCARGA Y CACHÉ
 // ==========================================
 async function downloadCurrentSong() {
@@ -296,11 +336,19 @@ async function downloadCurrentSong() {
     }
 
     try {
+        // Descargar la canción completa
         const response = await fetch(song.src);
         if (!response.ok) throw new Error('Error al descargar audio');
+        
         const blob = await response.blob();
         const cache = await caches.open(CACHE_NAME);
+        
+        // Guardar en caché con la URL original como clave
         await cache.put(song.src, new Response(blob));
+        
+        // Guardar también con un identificador único
+        const cacheKey = `song_${song.id}`;
+        await cache.put(cacheKey, new Response(blob));
         
         try {
             const cleanTitle = song.title.replace(/[^a-zA-Z0-9 ]/g, '').trim();
@@ -356,7 +404,7 @@ function changeSection(section) {
 }
 
 // ==========================================
-// CONTROLES DEL REPRODUCTOR
+// CONTROLES DEL REPRODUCTOR (MEJORADO PARA OFFLINE)
 // ==========================================
 function loadAndPlay(index) {
     const song = songs[index];
@@ -369,7 +417,46 @@ function loadAndPlay(index) {
     
     loadLyrics(song.id);
     
-    audio.src = song.src;
+    // INTENTAR REPRODUCIR DESDE CACHÉ PRIMERO
+    caches.open(CACHE_NAME).then((cache) => {
+        // Intentar con la URL original primero
+        cache.match(song.src).then((response) => {
+            if (response) {
+                // ¡ESTÁ EN CACHÉ! Reproducir desde ahí
+                console.log('📀 Reproduciendo desde caché OFFLINE:', song.title);
+                response.blob().then((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    setupAudio(url, song);
+                });
+            } else {
+                // Intentar con la clave de caché alternativa
+                cache.match(`song_${song.id}`).then((altResponse) => {
+                    if (altResponse) {
+                        console.log('📀 Reproduciendo desde caché (alt):', song.title);
+                        altResponse.blob().then((blob) => {
+                            const url = URL.createObjectURL(blob);
+                            setupAudio(url, song);
+                        });
+                    } else {
+                        // No está en caché, usar URL normal (requiere internet)
+                        console.log('📀 Reproduciendo desde internet:', song.title);
+                        setupAudio(song.src, song);
+                    }
+                });
+            }
+        }).catch(() => {
+            // Si falla, usar URL normal
+            setupAudio(song.src, song);
+        });
+    }).catch(() => {
+        // Si falla, usar URL normal
+        setupAudio(song.src, song);
+    });
+}
+
+// Función auxiliar para configurar el audio
+function setupAudio(src, song) {
+    audio.src = src;
     document.getElementById('currentTitle').innerText = song.title;
     document.getElementById('currentArtist').innerText = song.artist;
     
@@ -459,7 +546,7 @@ progress.addEventListener('input', () => {
 });
 
 // ==========================================
-// SISTEMA DE LETRAS AUTOMÁTICO (CORREGIDO)
+// SISTEMA DE LETRAS AUTOMÁTICO
 // ==========================================
 let lyricsData = [];
 let currentLyricIndex = -1;
@@ -536,7 +623,7 @@ lyricsToggle.onclick = toggleLyrics;
 document.querySelector('.controls').appendChild(lyricsToggle);
 
 // ==========================================
-// CARGAR LETRAS DESDE ARCHIVO .TXT (CORREGIDO)
+// CARGAR LETRAS DESDE ARCHIVO .TXT
 // ==========================================
 async function loadLyrics(songId) {
     try {
@@ -693,5 +780,9 @@ if (songs.length > 0) {
     songCounter.textContent = '0 canciones';
 }
 
+// Mostrar estado de conexión
+updateConnectionStatus();
+
 console.log(`🎵 DC Music cargado - ${songs.length} canciones en FLAC`);
 console.log(`📥 ${downloadedSongs.length} canciones descargadas`);
+console.log(`📡 Modo: ${navigator.onLine ? 'Online' : 'Offline'}`);
