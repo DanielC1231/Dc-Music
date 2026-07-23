@@ -5,67 +5,87 @@ const songs = [
   { 
     id: 1, 
     title: "Fanático del Full", 
-    artist: "Darell, Baby Rasta & Nengo Flow", 
+    artist: "Darell, Baby Rasta & Nengo Flow",
+    format: "FLAC",
+    bitrate: "~950 kbps",
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/01%20-%20Fan%C3%A1tico%20del%20Full%20%28feat.%20Darell%2C%20Baby%20Rasta%20%26%20%C3%91engo%20Flow%29%20%281%29.flac"
   },
   { 
     id: 2, 
     title: "Cuatro Babys", 
-    artist: "Trap Capos, Noriel, Bryant Myers & Juhn", 
+    artist: "Trap Capos, Noriel, Bryant Myers & Juhn",
+    format: "FLAC",
+    bitrate: "~950 kbps",
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/02%20-%20Cuatro%20Babys%20%28feat.%20Trap%20Capos%2C%20Noriel%2C%20Bryant%20Myers%20%26%20Juhn%29%20%281%29.flac"
   },
   { 
     id: 3, 
     title: "Diablita", 
-    artist: "Anuel AA & Baby Rasta", 
+    artist: "Anuel AA & Baby Rasta",
+    format: "FLAC",
+    bitrate: "~950 kbps",
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/03%20-%20Diablita%20%28feat.%20Anuel%20AA%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 4, 
     title: "Amigos y Enemigos", 
-    artist: "Trap Latino", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04%20-%20Amigos%20y%20Enemigos%20%28Remix%29%20%281%29.flac"
+    artist: "Trap Latino",
+    format: "FLAC",
+    bitrate: "~950 kbps",
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04%20-%20Amigos%20y%20Enemigos.flac"
   },
   { 
     id: 5, 
     title: "La Llamada", 
-    artist: "Darkiel, Almighty, Brytiago & Bryant Myers", 
+    artist: "Darkiel, Almighty, Brytiago & Bryant Myers",
+    format: "FLAC",
+    bitrate: "~950 kbps",
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/05%20-%20La%20Llamada%20%28feat.%20Darkiel%2C%20Almighty%2C%20Brytiago%20%26%20Bryant%20Myers%29%20%281%29.flac"
   },
   { 
     id: 6, 
     title: "Quieres Enamorarme", 
-    artist: "Bryant Myers, Juhn & Baby Rasta", 
+    artist: "Bryant Myers, Juhn & Baby Rasta",
+    format: "FLAC",
+    bitrate: "~950 kbps",
     src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/06%20-%20Quieres%20Enamorarme%20%28feat.%20Bryant%20Myers%2C%20Juhn%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 7, 
     title: "Me Pelea", 
-    artist: "Baby Rasta, Lito Kirino, Miky Woodz, Juhn & Jochy", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07%20-%20Me%20Pelea%20%28feat.%20Baby%20Rasta%2C%20Lito%20Kirino%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Jochy%29%20%281%29.flac"
+    artist: "Baby Rasta, Lito Kirino, Miky Woodz, Juhn & Jochy",
+    format: "FLAC",
+    bitrate: "~950 kbps",
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07%20-%20Me%20Pelea%20%28feat.%20Baby%20Rasta%2C%20Lito%20Kirino%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Jochy%29.flac"
   },
   { 
     id: 8, 
     title: "Como Glopeta", 
-    artist: "Gigolo y La Exce, Miky Woodz, Juhn & Baby Angel", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08%20-%20Como%20Glopeta%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Baby%20Angel%29%20%281%29.flac"
+    artist: "Gigolo y La Exce, Miky Woodz, Juhn & Baby Angel",
+    format: "FLAC",
+    bitrate: "~950 kbps",
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08%20-%20Como%20Glopeta%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Baby%20Angel%29.flac"
   },
   { 
     id: 9, 
     title: "La Paso Cabrón", 
-    artist: "Gigolo y La Exce, Falsetto y Sammy, Mike Duran & Baby Angel", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09%20-%20La%20Paso%20Cabr%C3%B3n%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Falsetto%20y%20Sammy%2C%20Mike%20Duran%20%26%20Baby%20Angel%29%20%281%29.flac"
+    artist: "Gigolo y La Exce, Falsetto y Sammy, Mike Duran & Baby Angel",
+    format: "FLAC",
+    bitrate: "~950 kbps",
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09%20-%20La%20Paso%20Cabr%C3%B3n%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Falsetto%20y%20Sammy%2C%20Mike%20Duran%20%26%20Baby%20Angel%29.flac"
   },
   { 
     id: 10, 
     title: "Plo Plo", 
-    artist: "Baby Rasta, Juanika, Nengo Flow & Pacho", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10%20-%20Plo%20Plo%20%28feat.%20Baby%20Rasta%2C%20Juanika%2C%20%C3%91engo%20Flow%20%26%20Pacho%29%20%281%29.flac"
+    artist: "Baby Rasta, Juanika, Nengo Flow & Pacho",
+    format: "FLAC",
+    bitrate: "~950 kbps",
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10%20-%20Plo%20Plo%20%28feat.%20Baby%20Rasta%2C%20Juanka%2C%20%C3%91engo%20Flow%20%26%20Pacho%29%20%281%29.flac"
   }
 ];
 
 // ==========================================
-// CONFIGURACIÓN DE CACHÉ (para FLAC)
+// CONFIGURACIÓN DE CACHÉ
 // ==========================================
 const CACHE_NAME = 'dc-music-flac-cache-v1';
 let downloadedSongs = [];
@@ -88,7 +108,7 @@ function isSongDownloaded(songId) {
 }
 
 // ==========================================
-// SALUDO DINÁMICO
+// SALUDO DINÁMICO (sin FLAC)
 // ==========================================
 function getGreeting() {
     const hour = new Date().getHours();
@@ -125,7 +145,8 @@ function renderSongs(songsToDisplay, section = 'inicio') {
         return;
     }
 
-    songCounter.textContent = `${songsToDisplay.length} canciones • FLAC`;
+    // Contador sin FLAC
+    songCounter.textContent = `${songsToDisplay.length} canciones`;
 
     songsToDisplay.forEach((song, index) => {
         const card = document.createElement('div');
@@ -143,7 +164,9 @@ function renderSongs(songsToDisplay, section = 'inicio') {
         card.innerHTML = `
             <h4>${song.title}</h4>
             <p>${song.artist}</p>
-            <span style="font-size: 10px; color: #1DB954; display: block; margin-top: 4px;">🎵 FLAC</span>
+            <span style="font-size: 10px; color: #1DB954; display: block; margin-top: 4px;">
+                ${song.format} • ${song.bitrate}
+            </span>
         `;
         
         card.onclick = () => {
@@ -200,7 +223,7 @@ async function downloadCurrentSong() {
         
         const available = getFilteredSongs();
         renderSongs(available, currentSection);
-        alert(`✅ "${song.title}" descargada en FLAC.`);
+        alert(`✅ "${song.title}" descargada en ${song.format}.`);
     } catch (error) {
         console.error('Error al descargar:', error);
         alert('❌ Error al descargar la canción. Inténtalo de nuevo.');
@@ -215,7 +238,7 @@ function getFilteredSongs() {
 }
 
 // ==========================================
-// NAVEGACIÓN
+// NAVEGACIÓN (sin FLAC en el título)
 // ==========================================
 function changeSection(section) {
     currentSection = section;
@@ -225,11 +248,11 @@ function changeSection(section) {
     
     if (section === 'inicio') {
         document.getElementById('menu-inicio').classList.add('active');
-        title.innerText = getGreeting() + " • FLAC";
+        title.innerText = getGreeting();
         renderSongs(songs, 'inicio');
     } else if (section === 'descargas') {
         document.getElementById('menu-descargas').classList.add('active');
-        title.innerText = "📥 Tus Descargas • FLAC";
+        title.innerText = "📥 Tus Descargas";
         const downloaded = getFilteredSongs();
         renderSongs(downloaded, 'descargas');
     }
@@ -341,15 +364,16 @@ progress.addEventListener('input', () => {
 // ==========================================
 loadDownloadedSongs();
 
-document.getElementById('sectionTitle').innerText = getGreeting() + " • FLAC";
+// Título sin FLAC
+document.getElementById('sectionTitle').innerText = getGreeting();
 
 if (songs.length > 0) {
     renderSongs(songs, 'inicio');
-    songCounter.textContent = `${songs.length} canciones • FLAC`;
+    songCounter.textContent = `${songs.length} canciones`;
 } else {
     songList.innerHTML = "<p>No hay canciones configuradas.</p>";
     songCounter.textContent = '0 canciones';
 }
 
-console.log(`🎵 DC Music FLAC cargado - ${songs.length} canciones en FLAC`);
-console.log(`📥 ${downloadedSongs.length} canciones descargadas en FLAC`);
+console.log(`🎵 DC Music cargado - ${songs.length} canciones en FLAC`);
+console.log(`📥 ${downloadedSongs.length} canciones descargadas`);
