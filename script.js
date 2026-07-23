@@ -1,4 +1,60 @@
 // ==========================================
+// DETECTAR ESTADO DE CONEXIÓN
+// ==========================================
+let isOnline = navigator.onLine;
+
+// Actualizar estado cuando cambie
+window.addEventListener('online', () => {
+    isOnline = true;
+    console.log('🌐 Conexión restablecida');
+    // Mostrar notificación
+    showNotification('🌐 Conexión restablecida', '#1DB954');
+});
+
+window.addEventListener('offline', () => {
+    isOnline = false;
+    console.log('📡 Sin conexión - Modo offline');
+    showNotification('📡 Sin conexión - Modo offline', '#ff6b6b');
+});
+
+function showNotification(message, color = '#1DB954') {
+    const notif = document.createElement('div');
+    notif.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: ${color};
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        z-index: 9999;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    `;
+    notif.textContent = message;
+    document.body.appendChild(notif);
+    
+    setTimeout(() => { notif.style.opacity = '1'; }, 100);
+    setTimeout(() => {
+        notif.style.opacity = '0';
+        setTimeout(() => notif.remove(), 500);
+    }, 3000);
+}
+
+// Mostrar estado inicial
+if (!isOnline) {
+    setTimeout(() => {
+        showNotification('📡 Sin conexión - Modo offline', '#ff6b6b');
+    }, 1000);
+} else {
+    console.log('🌐 Conectado a internet');
+}
+
+// ==========================================
 // LISTA DE CANCIONES EN FLAC
 // ==========================================
 const songs = [
