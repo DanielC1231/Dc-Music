@@ -57,7 +57,7 @@ self.addEventListener('activate', (event) => {
 });
 
 // ==========================================
-// INTERCEPTAR PETICIONES (CORREGIDO)
+// INTERCEPTAR PETICIONES - PARA CELULAR OFFLINE
 // ==========================================
 self.addEventListener('fetch', (event) => {
   const request = event.request;
@@ -65,25 +65,26 @@ self.addEventListener('fetch', (event) => {
 
   // IGNORAR peticiones que no sean http/https
   if (!url.protocol.startsWith('http')) {
-    console.log('⏭️ Ignorando petición no HTTP:', url.protocol);
     return;
   }
 
-  // IGNORAR peticiones HEAD (solo para detectar bitrate)
+  // IGNORAR peticiones HEAD
   if (request.method === 'HEAD') {
-    console.log('⏭️ Ignorando petición HEAD');
     return;
   }
 
-  // Si es una canción FLAC o de archive.org
+  // ==========================================
+  // PARA CANCIONES FLAC (BUSCAR EN CACHÉ PRIMERO)
+  // ==========================================
   if (url.pathname.endsWith('.flac') || url.hostname.includes('archive.org')) {
     event.respondWith(
       caches.match(request)
         .then((response) => {
           if (response) {
-            console.log('📀 Canción desde caché');
+            console.log('📀 Canción desde caché OFFLINE');
             return response;
           }
+          // Si no está en caché, intentar descargar (solo si hay internet)
           return fetch(request)
             .then((response) => {
               if (response && response.status === 200) {
@@ -96,14 +97,39 @@ self.addEventListener('fetch', (event) => {
               return response;
             })
             .catch(() => {
-              return new Response('No disponible offline', { status: 404 });
+              // Sin internet y sin caché
+              console.log('❌ Canción no disponible offline');
+              return new Response('No disponible offline', { 
+                status: 404,
+                statusText: 'Canción no descargada'
+              });
             });
         })
     );
     return;
   }
 
-  // Para otros archivos (HTML, CSS, JS, imágenes)
+  // ==========================================
+  // PARA ARCHIVOS DE LETRAS (NO BLOQUEAR)
+  // ==========================================
+  if (url.pathname.includes('/lyrics/')) {
+    event.respondWith(
+      caches.match(request)
+        .then((response) => {
+          if (response) {
+            return response;
+          }
+          return fetch(request).catch(() => {
+            return new Response('', { status: 404 });
+          });
+        })
+    );
+    return;
+  }
+
+  // ==========================================
+  // PARA OTROS ARCHIVOS (HTML, CSS, JS, IMÁGENES)
+  // ==========================================
   event.respondWith(
     caches.match(request)
       .then((response) => {
