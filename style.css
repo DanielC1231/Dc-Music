@@ -32,7 +32,6 @@ body {
     color: #1DB954;
     font-size: 20px;
     font-weight: bold;
-    text-decoration: none;
 }
 
 .logo-img {
@@ -40,11 +39,6 @@ body {
     height: 40px;
     object-fit: contain;
     border-radius: 8px;
-}
-
-.logo span {
-    font-size: 20px;
-    letter-spacing: -0.5px;
 }
 
 .menu li {
@@ -156,7 +150,6 @@ body {
     text-overflow: ellipsis;
 }
 
-/* Canción seleccionada actualmente */
 .card.playing {
     border-color: #1DB954;
     background-color: #1a2a1a;
@@ -166,7 +159,6 @@ body {
     color: #1DB954;
 }
 
-/* Canción descargada */
 .card.descargada {
     border-left: 4px solid #1DB954;
 }
@@ -279,15 +271,6 @@ body {
     border-radius: 50%;
     background: #1DB954;
     cursor: pointer;
-}
-
-#progress::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #1DB954;
-    cursor: pointer;
-    border: none;
 }
 
 .player-right {
