@@ -1,12 +1,28 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DC Music</title>
-    <!-- Favicon (logo en la pestaña) -->
+    
+    <!-- ===== METADATOS PWA ===== -->
+    <meta name="theme-color" content="#1DB954">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="DC Music">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- ===== FAVICON ===== -->
     <link rel="icon" type="image/png" href="img/logo.png">
+    
+    <!-- ===== ICONOS PARA PWA ===== -->
+    <link rel="apple-touch-icon" href="img/logo-192x192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="img/logo-192x192.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="img/logo-512x512.png">
+    
+    <!-- ===== MANIFEST ===== -->
+    <link rel="manifest" href="manifest.json">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -60,6 +76,22 @@
             <span id="totalTime">0:00</span>
         </div>
     </div>
+
+    <!-- ==========================================
+         REGISTRAR SERVICE WORKER PARA MODO OFFLINE
+         ========================================== -->
+    <script>
+        // Registrar el Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('✅ Service Worker registrado');
+                })
+                .catch((error) => {
+                    console.log('❌ Error al registrar Service Worker:', error);
+                });
+        }
+    </script>
 
     <script src="script.js"></script>
 </body>
