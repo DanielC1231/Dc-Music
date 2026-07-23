@@ -1,76 +1,71 @@
 // ==========================================
-// LISTA DE CANCIONES EN FLAC (ALTA CALIDAD)
+// LISTA DE CANCIONES EN FLAC - URLs CORRECTAS
 // ==========================================
 const songs = [
-  // --- De la primera imagen (1 al 8) ---
   { 
     id: 1, 
     title: "Fanático del Full", 
     artist: "Darell, Baby Rasta & Nengo Flow", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/01+-+Fan%C3%A1tico+del+Full+(feat.+Darell%2C+Baby+Rasta+%26+%C3%91engo+Flow)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/01%20-%20Fan%C3%A1tico%20del%20Full%20%28feat.%20Darell%2C%20Baby%20Rasta%20%26%20%C3%91engo%20Flow%29%20%281%29.flac"
   },
   { 
     id: 2, 
     title: "Cuatro Babys", 
     artist: "Trap Capos, Noriel, Bryant Myers & Juhn", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/02+-+Cuatro+Babys+(feat.+Trap+Capos%2C+Noriel%2C+Bryant+Myers+%26+Juhn)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/02%20-%20Cuatro%20Babys%20%28feat.%20Trap%20Capos%2C%20Noriel%2C%20Bryant%20Myers%20%26%20Juhn%29%20%281%29.flac"
   },
   { 
     id: 3, 
     title: "Diablita", 
     artist: "Anuel AA & Baby Rasta", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/03+-+Diablita+(feat.+Anuel+AA+%26+Baby+Rasta)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/03%20-%20Diablita%20%28feat.%20Anuel%20AA%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 4, 
     title: "Amigos y Enemigos", 
     artist: "Trap Latino", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04+-+Amigos+y+Enemigos+(Remix)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/04%20-%20Amigos%20y%20Enemigos%20%28Remix%29%20%281%29.flac"
   },
   { 
     id: 5, 
     title: "La Llamada", 
     artist: "Darkiel, Almighty, Brytiago & Bryant Myers", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/05+-+La+Llamada+(feat.+Darkiel%2C+Almighty%2C+Brytiago+%26+Bryant+Myers)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/05%20-%20La%20Llamada%20%28feat.%20Darkiel%2C%20Almighty%2C%20Brytiago%20%26%20Bryant%20Myers%29%20%281%29.flac"
   },
   { 
     id: 6, 
     title: "Quieres Enamorarme", 
     artist: "Bryant Myers, Juhn & Baby Rasta", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/06+-+Quieres+Enamorarme+(feat.+Bryant+Myers%2C+Juhn+%26+Baby+Rasta)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/06%20-%20Quieres%20Enamorarme%20%28feat.%20Bryant%20Myers%2C%20Juhn%20%26%20Baby%20Rasta%29%20%281%29.flac"
   },
   { 
     id: 7, 
     title: "Me Pelea", 
     artist: "Baby Rasta, Lito Kirino, Miky Woodz, Juhn & Jochy", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07+-+Me+Pelea+(feat.+Baby+Rasta%2C+Lito+Kirino%2C+Miky+Woodz%2C+Juhn+%26+Jochy)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/07%20-%20Me%20Pelea%20%28feat.%20Baby%20Rasta%2C%20Lito%20Kirino%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Jochy%29%20%281%29.flac"
   },
   { 
     id: 8, 
     title: "Como Glopeta", 
     artist: "Gigolo y La Exce, Miky Woodz, Juhn & Baby Angel", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08+-+Como+Glopeta+(feat.+Gigolo+y+La+Exce%2C+Miky+Woodz%2C+Juhn+%26+Baby+Angel)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/08%20-%20Como%20Glopeta%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Miky%20Woodz%2C%20Juhn%20%26%20Baby%20Angel%29%20%281%29.flac"
   },
-
-  // --- De la segunda imagen (9 al 14) ---
   { 
     id: 9, 
     title: "La Paso Cabrón", 
     artist: "Gigolo y La Exce, Falsetto y Sammy, Mike Duran & Baby Angel", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09+-+La+Paso+Cabr%C3%B3n+(feat.+Gigolo+y+La+Exce%2C+Falsetto+y+Sammy%2C+Mike+Duran+%26+Baby+Angel)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/09%20-%20La%20Paso%20Cabr%C3%B3n%20%28feat.%20Gigolo%20y%20La%20Exce%2C%20Falsetto%20y%20Sammy%2C%20Mike%20Duran%20%26%20Baby%20Angel%29%20%281%29.flac"
   },
   { 
     id: 10, 
     title: "Plo Plo", 
     artist: "Baby Rasta, Juanika, Nengo Flow & Pacho", 
-    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10+-+Plo+Plo+(feat.+Baby+Rasta%2C+Juanika%2C+%C3%91engo+Flow+%26+Pacho)+(1).flac" 
+    src: "https://archive.org/download/05-la-llamada-feat.-darkiel-almighty-brytiago-bryant-myers-1/10%20-%20Plo%20Plo%20%28feat.%20Baby%20Rasta%2C%20Juanika%2C%20%C3%91engo%20Flow%20%26%20Pacho%29%20%281%29.flac"
   }
-  // Nota: Las canciones 11-16 no están en la imagen, pero si las tienes, 
-  // puedes agregarlas aquí con el mismo patrón de URL
 ];
 
 // ==========================================
-// CONFIGURACIÓN DE CACHÉ (para FLAC también)
+// CONFIGURACIÓN DE CACHÉ (para FLAC)
 // ==========================================
 const CACHE_NAME = 'dc-music-flac-cache-v1';
 let downloadedSongs = [];
@@ -163,7 +158,7 @@ function renderSongs(songsToDisplay, section = 'inicio') {
 }
 
 // ==========================================
-// DESCARGA Y CACHÉ (para FLAC)
+// DESCARGA Y CACHÉ
 // ==========================================
 async function downloadCurrentSong() {
     if (audio.src === "") {
